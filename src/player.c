@@ -1,6 +1,7 @@
 #include "player.h"
 #include "raymath.h"
 #include  "stdio.h"
+#include "enemy.h"
 
 Player player;
 
@@ -9,11 +10,17 @@ void playerInit(){
     player.rec = (Rectangle){player.pos.x, player.pos.y, 50, 50};
     player.direction = (Vector2){0,0};
     player.speed = 5.0f;
-
     player.isMoving = false;
 }
 
-void playerMovement(){
+void playerUpdate(){
+
+    playerCollisions();
+
+    playerMovement();
+}
+
+void playerMovement(){  
     if(IsKeyDown(KEY_W)){
         player.direction.y -= 1;
     }
@@ -46,6 +53,25 @@ void playerMovement(){
     player.rec.x = player.pos.x;
     player.rec.y = player.pos.y;
 
+}
+
+void playerCollisions(){
+    for(int i = 0; i < ENEMY_NUM; i++){
+        //Enemy active check
+        if(enemy[i].active){
+            //If active, loop through active enemy bullets
+            for(int j = 0; j < bulletCapacity; j++){
+                if(enemy[i].bullets[j].active){
+                    if(CheckCollisionCircleRec(enemy[i].bullets[j].pos, enemy[i].bullets[j].radius, player.rec)){
+                        printf("HIT\n");                       
+                    }
+                }
+                else{
+                    //break;
+                }
+            }
+        }
+    }
 }
 
 void drawPlayer(){

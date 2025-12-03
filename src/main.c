@@ -19,12 +19,15 @@ void init(){
 
     playerInit();
 
-    enemyInit();
+    enemyInit((Vector2){100, 100}, 1);
+    enemyInit((Vector2){900, 900}, 2);
+    enemyInit((Vector2){900, 100}, 3);
 }
 
 void update(){
-    playerMovement();
+    
     updateEnemy();
+    playerUpdate();
 
     draw(); 
     drawPlayer();

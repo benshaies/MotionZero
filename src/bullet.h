@@ -18,6 +18,8 @@ extern int bulletCapacity;
 
     void bulletInit(Bullets bullet[], Vector2 enemyPos);
 
+    void deleteBullet(Bullets bullet[], int i);
+
     void bulletUpdate(Bullets bullet[], float speed);
 
     void fireBullet();

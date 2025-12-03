@@ -16,7 +16,11 @@
 
     void playerInit();
 
+    void playerUpdate();
+
     void playerMovement();
+
+    void playerCollisions();
 
     void drawPlayer();
 
