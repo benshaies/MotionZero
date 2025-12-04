@@ -14,7 +14,7 @@
 
     extern Player player;
 
-    void playerInit();
+    void playerInit(Vector2 starPos);
 
     void playerUpdate();
 

@@ -5,8 +5,8 @@
 
 Player player;
 
-void playerInit(){
-    player.pos = (Vector2){500, 500};
+void playerInit(Vector2 startPos){
+    player.pos = startPos;
     player.rec = (Rectangle){player.pos.x, player.pos.y, 50, 50};
     player.direction = (Vector2){0,0};
     player.speed = 5.0f;

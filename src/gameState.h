@@ -1,6 +1,10 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 #include "level.h"
+#include "player.h"
+#include "raylib.h"
+#include "enemy.h"
+
 
     typedef enum{
         MENU,
@@ -13,5 +17,7 @@
     void gameInit();
 
     void gameUpdate();
+
+    void gameDraw();
 
 #endif

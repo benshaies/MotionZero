@@ -1,14 +1,19 @@
 #ifndef LEVEL_H
 #define LEVEL_H
+#include "raylib.h"
+
+    #define TILE_SIZE 100
 
     #define LEVEL_ONE_SIZE_X 32
     #define LEVEL_ONE_SIZE_Y 54
+
 
     typedef struct{
         int width;
         int height;
         int **array;
         int num;
+        Vector2 startPos;
     }Level;
 
     void loadLevel(Level *level);

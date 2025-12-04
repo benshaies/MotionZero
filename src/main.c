@@ -12,37 +12,20 @@ void draw(){
 
     ClearBackground(RAYWHITE);
 
+    gameDraw();
+
     EndDrawing();
 }
 
-void init(){
+int main(void){
     InitWindow(screenWidth, screenHeight, "MotionZero");  
     SetTargetFPS(60);
 
     gameInit();
-    playerInit();
-
-    enemyInit((Vector2){100, 100}, 1);
-    enemyInit((Vector2){900, 900}, 2);
-    enemyInit((Vector2){900, 100}, 3);
-}
-
-void update(){
-    
-    updateEnemy();
-    playerUpdate();
-    gameUpdate();
-
-    draw(); 
-    drawPlayer();
-    drawEnemy();
-}
-
-int main(void){
-
-    init();
     while (!WindowShouldClose()){
-        update();
+        gameUpdate();
+
+        draw(); 
     }
 
     CloseWindow();
