@@ -43,6 +43,8 @@ set(SOURCES
     ../src/player.c
     ../src/enemy.c
     ../src/bullet.c
+    ../src/level.c
+    ../src/gameState.c
 )
 
 # Create executable

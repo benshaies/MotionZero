@@ -1,6 +1,8 @@
 #include "raylib.h"
 #include "player.h"
 #include "enemy.h"
+#include "level.h"
+#include "gameState.h"
 
 const int screenWidth = 1000;
 const int screenHeight = 1000;
@@ -17,6 +19,7 @@ void init(){
     InitWindow(screenWidth, screenHeight, "MotionZero");  
     SetTargetFPS(60);
 
+    gameInit();
     playerInit();
 
     enemyInit((Vector2){100, 100}, 1);
@@ -28,6 +31,7 @@ void update(){
     
     updateEnemy();
     playerUpdate();
+    gameUpdate();
 
     draw(); 
     drawPlayer();
