@@ -14,11 +14,15 @@
         int **array;
         int num;
         Vector2 startPos;
+        Rectangle *rec;
+        int RecNum;
     }Level;
 
     void loadLevel(Level *level);
 
     void levelInit(Level *level, int levelNum);
+
+    void loadLevelEnemies(Level *level);
 
     void drawLevel(Level *level);
 

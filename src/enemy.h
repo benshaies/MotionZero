@@ -2,6 +2,7 @@
 #define ENEMY_H
 #include "raylib.h"
 #include "bullet.h"
+#include "level.h"
 
 #define ENEMY_NUM 20
 
@@ -13,6 +14,8 @@
         Bullets bullets[20];
         float bulletDelay;
         float bulletTimer;
+        float bulletNormalSpeed;
+        float bulletSlowSpeed;
     }Enemy;
 
     extern Enemy enemy[ENEMY_NUM];
@@ -21,7 +24,7 @@
 
     void enemyFire(int i);
 
-    void updateEnemy();
+    void updateEnemy(Level *level);
 
     void drawEnemy();
 #endif

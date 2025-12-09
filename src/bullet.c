@@ -28,16 +28,27 @@ void deleteBullet(Bullets bullet[], int i){
     bullet[i].direction = (Vector2){0};
 }
 
-void bulletUpdate(Bullets bullet[], float speed){
+void bulletUpdate(Bullets bullet[], float speed, Level *level){
     for(int i = 0; i < bulletCapacity; i++){
         if(bullet[i].active){
             bullet[i].pos.x += bullet[i].direction.x * speed;
             bullet[i].pos.y += bullet[i].direction.y * speed;
 
-            //Removes bullet with function (Takes in array and index)
-            if(bullet[i].pos.x > 1000 || bullet[i].pos.x < 0 || bullet[i].pos.y > 1000 || bullet[i].pos.y < 0){
-                deleteBullet(bullet, i);
+            //Loop through level rectangles 
+            //If all the bullet isnt in any of the rectnagles, deletes it
+            int collisionCheckNum = 0;
+            for(int j = 0; j < level->RecNum; j++){
+                if(!(CheckCollisionCircleRec(bullet[i].pos, bullet[i].radius, level->rec[j]))){
+                    collisionCheckNum++;
+
+                    if(collisionCheckNum == level->RecNum){
+                        deleteBullet(bullet, i);
+                    }
+
+                }
             }
+            
+            
         }
         
     }

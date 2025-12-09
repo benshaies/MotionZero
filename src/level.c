@@ -2,6 +2,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
+#include "enemy.h"
 
 char *fileName;
 
@@ -70,6 +71,14 @@ void levelInit(Level *level, int levelNum){
             level->width = 32;
             level->height = 54;
             level->startPos = (Vector2){4*TILE_SIZE, 51*TILE_SIZE};
+
+            //Level rec init
+            level->RecNum = 3;
+            level->rec = malloc(sizeof(Rectangle) * level->RecNum);
+
+            level->rec[0] = (Rectangle){0, 2200, 1000, 3200};
+            level->rec[1] = (Rectangle){1000, 2200, 2200, 1000};
+            level->rec[2] = (Rectangle){2200, 0, 1000, 3200};
             break;
     }
 
@@ -94,13 +103,25 @@ void loadLevel(Level *level){
     
 }
 
+//Takes level array and spawns in enemies
+void loadLevelEnemies(Level *level){
+    for(int y = 0; y < level->height; y++){
+        for(int x = 0; x < level->width; x++){
+            
+            if(level->array[y][x] == 1 || level->array[y][x] == 2 || level->array[y][x] == 3){
+                enemyInit((Vector2){x*TILE_SIZE, y*TILE_SIZE}, level->array[y][x]);
+            }
+        }
+    }
+}
+
 //Draws level
 void drawLevel(Level *level){
     for(int y = 0; y < level->height; y++){
         for(int x = 0; x < level->width; x++){
             switch (level->array[y][x]){
                 case 4: //Drawing walls
-                    DrawRectangle(TILE_SIZE*x, TILE_SIZE*y, TILE_SIZE, TILE_SIZE, RED);
+                    DrawRectangle(TILE_SIZE*x, TILE_SIZE*y, TILE_SIZE, TILE_SIZE, GREEN);
                     break;
             }
         }

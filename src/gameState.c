@@ -10,6 +10,7 @@ Level levelOne;
 void gameInit(){
     levelInit(&levelOne, 1);
     loadLevel(&levelOne);
+    loadLevelEnemies(&levelOne);
 
     playerInit(levelOne.startPos);
 
@@ -24,9 +25,8 @@ void gameInit(){
 void gameUpdate(){
     //Update camera target with player position
     camera.target = player.pos;
-
-
-    updateEnemy();
+    
+    updateEnemy(&levelOne);
     playerUpdate();
 }
 

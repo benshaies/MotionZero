@@ -1,6 +1,7 @@
 #ifndef BULLET_H
 #define BULLET_H
 #include "raylib.h"
+#include "level.h"
 
 extern int bulletCapacity;
 
@@ -20,9 +21,7 @@ extern int bulletCapacity;
 
     void deleteBullet(Bullets bullet[], int i);
 
-    void bulletUpdate(Bullets bullet[], float speed);
-
-    void fireBullet();
+    void bulletUpdate(Bullets bullet[], float speed, Level *level);
 
     void drawBullet(Bullets bullet[]);
 

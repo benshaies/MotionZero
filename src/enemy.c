@@ -15,6 +15,9 @@ void enemyInit(Vector2 pos, int type){
             enemy[i].bullets[bulletCapacity];
             enemy[i].bulletDelay = type ;
             enemy[i].bulletTimer = GetTime();
+
+            enemy[i].bulletNormalSpeed = 10;
+            enemy[i].bulletSlowSpeed = 2.5;
             
             break;
         }
@@ -37,10 +40,10 @@ void enemyFire(int i){
 }
 
 
-void updateEnemy(){
+void updateEnemy(Level *level){
 
     for(int i = 0; i < ENEMY_NUM; i++){
-        bulletUpdate(enemy[i].bullets, player.isMoving ? 10 : 2.5);
+        bulletUpdate(enemy[i].bullets, player.isMoving ? enemy[i].bulletNormalSpeed : enemy[i].bulletSlowSpeed, level);
     
         enemyFire(i);
         
