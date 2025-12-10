@@ -22,7 +22,7 @@ void gameInit(){
     //Setup camera
     camera = (Camera2D){0};
     camera.target = player.pos;
-    camera.offset = (Vector2){500, 500};
+    camera.offset = (Vector2){500, 750};
     camera.zoom = 1.0f; 
     
 }
@@ -40,6 +40,7 @@ void gameUpdate(){
             break;
         case DEAD:
             resetPlayer(game.currentLevel);
+            resetEnemies();
             game.currentState = PLAYING;
             break;
         case PAUSED:
@@ -54,7 +55,7 @@ void gameDraw(){
             break;
         case PLAYING:
             BeginMode2D(camera);
-
+            
                 drawLevel(game.currentLevel);
 
                 drawPlayer();

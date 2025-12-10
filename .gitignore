@@ -12,6 +12,7 @@
 /*.dll
 /*.so
 /*.o
+/MotionZero.zip
 
 # IDE/editor files
 .vscode/

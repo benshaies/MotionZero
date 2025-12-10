@@ -91,3 +91,10 @@ void drawEnemy(){
 
     
 }
+
+void resetEnemies(){
+    for(int i = 0; i < ENEMY_NUM; i++){
+        resetBullets(enemy[i].bullets);
+        enemy[i].bulletTimer = 0;
+    }
+}

@@ -11,11 +11,13 @@
         int type;
         bool active;
         Rectangle rec;
+        
         Bullets bullets[20];
         float bulletDelay;
         float bulletTimer;
         float bulletNormalSpeed;
         float bulletSlowSpeed;
+
         Color enemyColor;
     }Enemy;
 

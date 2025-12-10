@@ -9,9 +9,6 @@ extern int bulletCapacity;
         bool active;
         Vector2 pos;
         float radius;
-        float speed;
-        float timer;
-        float delay;
         Vector2 direction;
     }Bullets;
 
@@ -24,5 +21,7 @@ extern int bulletCapacity;
     void bulletUpdate(Bullets bullet[], float speed, Level *level);
 
     void drawBullet(Bullets bullet[]);
+
+    void resetBullets(Bullets bullet[]);
 
 #endif
