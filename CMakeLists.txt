@@ -10,13 +10,13 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     string(REPLACE "-rdynamic" "" CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
 
     # Point to Windows Raylib includes and libs - update these paths accordingly!
-    include_directories("/home/killswitch/raylib/src")
-    link_directories("/home/killswitch/raylib/src")
+    include_directories("/home/benja/raylib/src")
+    link_directories("/home/benja/raylib/build-windows/raylib")
     set(PLATFORM_LIBS raylib)
 
     set(PLATFORM_LIBS
         raylib
-        winmm`
+        winmm
         gdi32
         opengl32
         kernel32
@@ -24,8 +24,8 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
     )
 else()
     # Linux includes and libs
-    include_directories("/home/killswitch/raylib/src")
-    link_directories("/home/killswitch/raylib/build/raylib")
+    include_directories("/home/benja/raylib/src")
+    link_directories("/home/benja/raylib")
 
     set(PLATFORM_LIBS
         raylib

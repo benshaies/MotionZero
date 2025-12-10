@@ -2,17 +2,17 @@
 #include "player.h"
 #include "raymath.h"
 
-int bulletCapacity = 5;
+int bulletCapacity = 10;
 
 
 void bulletInit(Bullets bullet[], Vector2 enemyPos){
     for(int i = 0; i < bulletCapacity; i++){
         if(!bullet[i].active){
             bullet[i].active = true;
-            bullet[i].pos = enemyPos;
+            bullet[i].pos = (Vector2){enemyPos.x + 37.5, enemyPos.y + 37.5};
             bullet[i].radius = 5;  
             bullet[i].speed = 10.0f;
-            bullet[i].direction = (Vector2){player.pos.x - enemyPos.x, player.pos.y - enemyPos.y};
+            bullet[i].direction = (Vector2){player.pos.x + player.rec.width/2 - enemyPos.x, player.pos.y + player.rec.height/2 - enemyPos.y};
             bullet[i].direction = Vector2Normalize(bullet[i].direction);
             
             break;

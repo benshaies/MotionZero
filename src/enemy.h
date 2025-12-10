@@ -16,6 +16,7 @@
         float bulletTimer;
         float bulletNormalSpeed;
         float bulletSlowSpeed;
+        Color enemyColor;
     }Enemy;
 
     extern Enemy enemy[ENEMY_NUM];
@@ -27,4 +28,6 @@
     void updateEnemy(Level *level);
 
     void drawEnemy();
+
+    void resetEnemies();
 #endif

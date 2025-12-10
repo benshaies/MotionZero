@@ -8,11 +8,17 @@
 
     typedef enum{
         MENU,
-        LEVELONE,
-        LEVELTWO,
+        PLAYING,
+        DEAD,
+        PAUSED,
     }GameState;
 
-    extern GameState currentState;
+    typedef struct{
+        GameState currentState;
+        Level *currentLevel;
+    }Game;
+    
+    extern Game game;
 
     void gameInit();
 

@@ -7,7 +7,7 @@
 char *fileName;
 
 int level1[54][32] = {
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4 , 4 , 4 , 4 , 4 , 4 , 4 , 4 , 4 , 4,
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4 , 4 , 4 , 4 , 5 , 5 , 4 , 4 , 4 , 4,
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 4,
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 4,
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 4,
@@ -76,9 +76,9 @@ void levelInit(Level *level, int levelNum){
             level->RecNum = 3;
             level->rec = malloc(sizeof(Rectangle) * level->RecNum);
 
-            level->rec[0] = (Rectangle){0, 2200, 1000, 3200};
-            level->rec[1] = (Rectangle){1000, 2200, 2200, 1000};
-            level->rec[2] = (Rectangle){2200, 0, 1000, 3200};
+            level->rec[0] = (Rectangle){100, 2300, 800, 3000};
+            level->rec[1] = (Rectangle){900, 2300, 2200, 800};
+            level->rec[2] = (Rectangle){2300, 100, 800, 2200};
             break;
     }
 
@@ -122,6 +122,9 @@ void drawLevel(Level *level){
             switch (level->array[y][x]){
                 case 4: //Drawing walls
                     DrawRectangle(TILE_SIZE*x, TILE_SIZE*y, TILE_SIZE, TILE_SIZE, GREEN);
+                    break;
+                case 5:
+                    DrawRectangle(TILE_SIZE*x, TILE_SIZE*y, TILE_SIZE, TILE_SIZE, GOLD);
                     break;
             }
         }

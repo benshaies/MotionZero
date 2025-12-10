@@ -1,7 +1,7 @@
 
 # Build directories
 /build/
-/build-win/
+/build-windows/
 /bin/
 /obj/
 /CMakeFiles/
