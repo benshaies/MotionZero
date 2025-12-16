@@ -4,6 +4,7 @@
 #include "player.h"
 #include "raylib.h"
 #include "enemy.h"
+#include "texture.h"
 
 
     typedef enum{
@@ -11,6 +12,7 @@
         PLAYING,
         DEAD,
         PAUSED,
+        RESPAWN,
     }GameState;
 
     typedef struct{

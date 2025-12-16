@@ -45,6 +45,8 @@ set(SOURCES
     ../src/bullet.c
     ../src/level.c
     ../src/gameState.c
+    ../src/texture.c
+    ../src/animation.c
 )
 
 # Create executable

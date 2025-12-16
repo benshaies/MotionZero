@@ -8,7 +8,11 @@ Camera2D camera;
 Level levelOne;
 Level levelTwo;
 
+int deathFrameCount = 0;
+
 void gameInit(){
+
+    loadTexture();
 
     levelInit(&levelOne, 1);
     loadLevel(&levelOne);
@@ -22,7 +26,7 @@ void gameInit(){
     //Setup camera
     camera = (Camera2D){0};
     camera.target = player.pos;
-    camera.offset = (Vector2){500, 750};
+    camera.offset = (Vector2){500, 500};
     camera.zoom = 1.0f; 
     
 }
@@ -39,6 +43,14 @@ void gameUpdate(){
             playerUpdate(game.currentLevel);
             break;
         case DEAD:
+            deathFrameCount++;
+            if (deathFrameCount >= 300){
+                game.currentState = RESPAWN;
+                deathFrameCount = 0;
+            }
+            break;
+            
+        case RESPAWN:
             resetPlayer(game.currentLevel);
             resetEnemies();
             game.currentState = PLAYING;
@@ -65,7 +77,19 @@ void gameDraw(){
             break;
 
         case DEAD:
+            BeginMode2D(camera);
             
+                drawLevel(game.currentLevel);
+
+                
+                drawEnemy();
+                drawPlayerDeath();
+        
+            EndMode2D();
+            break;
+        
+        case RESPAWN:
+
             
 
         case PAUSED:

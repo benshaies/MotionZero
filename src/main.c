@@ -3,6 +3,7 @@
 #include "enemy.h"
 #include "level.h"
 #include "gameState.h"
+#include "texture.h"
 
 const int screenWidth = 1000;
 const int screenHeight = 1000;
@@ -10,7 +11,7 @@ const int screenHeight = 1000;
 void draw(){
     BeginDrawing();
 
-    ClearBackground(WHITE);
+    ClearBackground(RAYWHITE);
 
     gameDraw();
 
@@ -27,7 +28,7 @@ int main(void){
 
         draw(); 
     }
-
+    unloadTexture();
     CloseWindow();
     return 0;
 }
