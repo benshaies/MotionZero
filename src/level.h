@@ -26,5 +26,7 @@
 
     void drawLevel(Level *level);
 
+    bool isWallTile(int tileId);
+
 
 #endif

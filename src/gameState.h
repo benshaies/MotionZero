@@ -6,7 +6,6 @@
 #include "enemy.h"
 #include "texture.h"
 
-
     typedef enum{
         MENU,
         PLAYING,

@@ -14,7 +14,7 @@ void enemyInit(Vector2 pos, int type){
             enemy[i].rec = (Rectangle){pos.x, pos.y, 75, 75};
 
             switch (type){
-                case 1: 
+                case 100: 
                     enemy[i].enemyColor = RED;
 
                     enemy[i].bullets[bulletCapacity];
@@ -23,7 +23,7 @@ void enemyInit(Vector2 pos, int type){
                     enemy[i].bulletNormalSpeed = 8;
                     enemy[i].bulletSlowSpeed = 2.5;
                     break;
-                case 2:
+                case 200:
                     enemy[i].enemyColor = YELLOW;
 
                     enemy[i].bullets[bulletCapacity];
@@ -32,7 +32,7 @@ void enemyInit(Vector2 pos, int type){
                     enemy[i].bulletNormalSpeed = 17.5;
                     enemy[i].bulletSlowSpeed = 6;
                     break;
-                case 3:
+                case 300:
                     enemy[i].enemyColor = BLUE;
 
                     enemy[i].bullets[bulletCapacity];

@@ -8,6 +8,8 @@
     extern Texture2D playerNotMovingTexture;
     extern Texture2D playerDeathTexture;
     extern Texture2D graveStoneTexture;
+    
+    extern Texture2D levelTilesetTexture;
 
     void loadTexture();
 

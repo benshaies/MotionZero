@@ -129,8 +129,9 @@ void playerCollisions(Level *level)
     {
         for (int x = 0; x < level->width; x++)
         {
-            if (level->array[y][x] == 4)
+            if (isWallTile(level->array[y][x]))
             {
+                
                 Rectangle wallrec = {x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE};
                 if (CheckCollisionPointRec(player.leftPoint, wallrec))
                 {
