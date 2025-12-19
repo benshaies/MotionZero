@@ -4,6 +4,8 @@ Texture2D playerDownTexture, playerSideTexture, playerUpTexture, playerNotMoving
 
 Texture2D levelTilesetTexture;
 
+Texture2D enemyTilesetTexture;
+
 void loadTexture(){
     playerDownTexture = LoadTexture("../assets/playerDown.png");
     playerSideTexture = LoadTexture("../assets/playerSide.png");
@@ -12,6 +14,8 @@ void loadTexture(){
     playerDeathTexture = LoadTexture("../assets/playerDeath.png");
     graveStoneTexture = LoadTexture("../assets/graveStone.png");
     levelTilesetTexture = LoadTexture("../assets/levelTileset.png");
+    enemyTilesetTexture = LoadTexture("../assets/enemyTilset.png");
+    
 }
 
 void unloadTexture(){
@@ -22,4 +26,5 @@ void unloadTexture(){
     UnloadTexture(playerDeathTexture);
     UnloadTexture(graveStoneTexture);
     UnloadTexture(levelTilesetTexture);
+    UnloadTexture(enemyTilesetTexture);
 }

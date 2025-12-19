@@ -3,6 +3,8 @@
 #include "raylib.h"
 #include "bullet.h"
 #include "level.h"
+#include "animation.h"
+
 
 #define ENEMY_NUM 20
 
@@ -19,6 +21,9 @@
         float bulletSlowSpeed;
 
         Color enemyColor;
+
+        Animation anim;
+
     }Enemy;
 
     extern Enemy enemy[ENEMY_NUM];

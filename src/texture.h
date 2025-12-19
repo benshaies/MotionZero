@@ -10,6 +10,7 @@
     extern Texture2D graveStoneTexture;
     
     extern Texture2D levelTilesetTexture;
+    extern Texture2D enemyTilesetTexture;
 
     void loadTexture();
 

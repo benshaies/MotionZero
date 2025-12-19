@@ -1,6 +1,7 @@
 #include "enemy.h"
 #include "player.h"
 #include "math.h"
+#include "texture.h"
 
 Enemy enemy[ENEMY_NUM];
 
@@ -11,10 +12,10 @@ void enemyInit(Vector2 pos, int type){
             enemy[i].active = true;
             enemy[i].pos = pos;
             enemy[i].type = type;
-            enemy[i].rec = (Rectangle){pos.x, pos.y, 75, 75};
+            enemy[i].rec = (Rectangle){pos.x, pos.y, 100, 100};
 
             switch (type){
-                case 100: 
+                case 1: 
                     enemy[i].enemyColor = RED;
 
                     enemy[i].bullets[bulletCapacity];
@@ -22,8 +23,10 @@ void enemyInit(Vector2 pos, int type){
                     enemy[i].bulletTimer = GetTime();
                     enemy[i].bulletNormalSpeed = 8;
                     enemy[i].bulletSlowSpeed = 2.5;
+
+                    animationInit(&enemy[i].anim, 0, enemyTilesetTexture, 16, 4, 0, 0);
                     break;
-                case 200:
+                case 2:
                     enemy[i].enemyColor = YELLOW;
 
                     enemy[i].bullets[bulletCapacity];
@@ -32,7 +35,7 @@ void enemyInit(Vector2 pos, int type){
                     enemy[i].bulletNormalSpeed = 17.5;
                     enemy[i].bulletSlowSpeed = 6;
                     break;
-                case 300:
+                case 3:
                     enemy[i].enemyColor = BLUE;
 
                     enemy[i].bullets[bulletCapacity];
@@ -84,7 +87,13 @@ void drawEnemy(){
         drawBullet(enemy[i].bullets);
 
         if(enemy[i].active){
-            DrawRectangleRec(enemy[i].rec, enemy[i].enemyColor);
+            if(enemy[i].type == 100){
+                playAnimation(&enemy[i].anim, enemy[i].rec, 1, 0.5);
+            }
+            else{
+                DrawRectangleRec(enemy[i].rec, enemy[i].enemyColor);
+            }
+            
         }
     }
     

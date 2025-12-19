@@ -81,9 +81,9 @@ void gameDraw(){
             break;
         case PLAYING:
             BeginMode2D(camera);
-            
-                drawLevel(game.currentLevel);
 
+                
+                drawLevel(game.currentLevel);
                 drawPlayer();
                 drawEnemy();
         
