@@ -8,8 +8,11 @@ extern int bulletCapacity;
     typedef struct{
         bool active;
         Vector2 pos;
+        Vector2 previousPos;
+        Vector2 previousPreviousPos;
         float radius;
         Vector2 direction;
+        
     }Bullets;
 
 
@@ -20,7 +23,7 @@ extern int bulletCapacity;
 
     void bulletUpdate(Bullets bullet[], float speed, Level *level);
 
-    void drawBullet(Bullets bullet[]);
+    void drawBullet(Bullets bullet[], Color bulletColor);
 
     void resetBullets(Bullets bullet[]);
 

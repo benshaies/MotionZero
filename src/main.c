@@ -11,7 +11,7 @@ const int screenHeight = 1000;
 void draw(){
     BeginDrawing();
 
-    ClearBackground(BLACK);
+    ClearBackground(WHITE);
 
     gameDraw();
 

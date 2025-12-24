@@ -35,9 +35,16 @@ void playerInit(Vector2 startPos)
 void playerUpdate(Level *level)
 {
 
-    playerCollisions(level);
+    
 
     playerMovement();
+
+    playerCollisions(level);
+
+    printf("x:%f y%f\n", player.pos.x, player.pos.y);
+    if(IsKeyPressed(KEY_F)){
+        player.pos = level->startPos;
+    }
 }
 
 void playerMovement()
@@ -104,6 +111,38 @@ void playerMovement()
 void playerCollisions(Level *level)
 {
 
+        if(game.currentState != DEAD){
+        // Check player collision with walls
+        for (int y = 0; y < level->height; y++)
+        {
+            for (int x = 0; x < level->width; x++)
+            {
+                if (isWallTile(level->array[y][x]))
+                {
+                    
+                    Rectangle wallrec = {x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE};
+                    if (CheckCollisionPointRec(player.leftPoint, wallrec))
+                    {
+                        player.pos.x = x * TILE_SIZE + TILE_SIZE + 1;
+                    }
+                    else if (CheckCollisionPointRec(player.rightPoint, wallrec))
+                    {
+                        player.pos.x = (x * TILE_SIZE) - player.rec.width - 1;
+                    }
+
+                    if (CheckCollisionPointRec(player.topPoint, wallrec))
+                    {
+                        player.pos.y = (y * TILE_SIZE) + TILE_SIZE + 1;
+                    }
+                    else if (CheckCollisionPointRec(player.downPoint, wallrec))
+                    {
+                        player.pos.y = (y * TILE_SIZE) - player.rec.height - 1;
+                    }
+                }
+            }
+        }   
+    }
+
     for (int i = 0; i < ENEMY_NUM; i++)
     {
         // Enemy active check
@@ -118,41 +157,16 @@ void playerCollisions(Level *level)
                     {
                         deleteBullet(enemy[i].bullets, i);
                         game.currentState = DEAD;
+                        return;
+                        break;
                     }
                 }
             }
         }
     }
 
-    // Check player collision with walls
-    for (int y = 0; y < level->height; y++)
-    {
-        for (int x = 0; x < level->width; x++)
-        {
-            if (isWallTile(level->array[y][x]))
-            {
-                
-                Rectangle wallrec = {x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE};
-                if (CheckCollisionPointRec(player.leftPoint, wallrec))
-                {
-                    player.pos.x = x * TILE_SIZE + TILE_SIZE + 1;
-                }
-                else if (CheckCollisionPointRec(player.rightPoint, wallrec))
-                {
-                    player.pos.x = (x * TILE_SIZE) - player.rec.width - 1;
-                }
 
-                if (CheckCollisionPointRec(player.topPoint, wallrec))
-                {
-                    player.pos.y = (y * TILE_SIZE) + TILE_SIZE + 1;
-                }
-                else if (CheckCollisionPointRec(player.downPoint, wallrec))
-                {
-                    player.pos.y = (y * TILE_SIZE) - player.rec.height - 1;
-                }
-            }
-        }
-    }
+    
 }
 
 void drawPlayer()

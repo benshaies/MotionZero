@@ -15,8 +15,8 @@ void enemyInit(Vector2 pos, int type){
             enemy[i].rec = (Rectangle){pos.x, pos.y, 100, 100};
 
             switch (type){
-                case 1: 
-                    enemy[i].enemyColor = RED;
+                case 56: //Normal Medium
+                    enemy[i].enemyColor = YELLOW;
 
                     enemy[i].bullets[bulletCapacity];
                     enemy[i].bulletDelay = 2;
@@ -26,23 +26,27 @@ void enemyInit(Vector2 pos, int type){
 
                     animationInit(&enemy[i].anim, 0, enemyTilesetTexture, 16, 4, 0, 0);
                     break;
-                case 2:
-                    enemy[i].enemyColor = YELLOW;
+                case 57: // Sniper
+                    enemy[i].enemyColor = RED;
 
                     enemy[i].bullets[bulletCapacity];
                     enemy[i].bulletDelay = 5;
                     enemy[i].bulletTimer = GetTime();
                     enemy[i].bulletNormalSpeed = 17.5;
                     enemy[i].bulletSlowSpeed = 6;
+
+                    animationInit(&enemy[i].anim, 0, enemyTilesetTexture, 16, 4, 0, 16);
                     break;
-                case 3:
-                    enemy[i].enemyColor = BLUE;
+                case 58: //Slow but a lot
+                    enemy[i].enemyColor = PURPLE;
 
                     enemy[i].bullets[bulletCapacity];
                     enemy[i].bulletDelay = 0.5;
                     enemy[i].bulletTimer = GetTime();
                     enemy[i].bulletNormalSpeed = 6;
                     enemy[i].bulletSlowSpeed = 1;
+
+                    animationInit(&enemy[i].anim, 0, enemyTilesetTexture, 16, 4, 0, 32);
                     break;
                 }
             
@@ -84,20 +88,15 @@ void updateEnemy(Level *level){
 void drawEnemy(){
 
     for(int i = 0; i < ENEMY_NUM; i++){
-        drawBullet(enemy[i].bullets);
+        drawBullet(enemy[i].bullets, enemy[i].enemyColor);
 
         if(enemy[i].active){
-            if(enemy[i].type == 100){
-                playAnimation(&enemy[i].anim, enemy[i].rec, 1, 0.5);
-            }
-            else{
-                DrawRectangleRec(enemy[i].rec, enemy[i].enemyColor);
+            if(enemy[i].type == 56 || enemy[i].type == 57  || enemy[i].type == 58){
+                playAnimation(&enemy[i].anim, enemy[i].rec, 1, player.isMoving ? 0.25 : 0.5);
             }
             
         }
     }
-    
-
     
 }
 

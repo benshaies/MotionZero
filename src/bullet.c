@@ -29,6 +29,11 @@ void deleteBullet(Bullets bullet[], int i){
 void bulletUpdate(Bullets bullet[], float speed, Level *level){
     for(int i = 0; i < bulletCapacity; i++){
         if(bullet[i].active){
+
+            //Store previos position
+            bullet[i].previousPreviousPos = (Vector2){bullet[i].pos.x - (bullet[i].direction.x * speed), bullet[i].pos.y - (bullet[i].direction.y * speed) };
+            bullet[i].previousPos = bullet[i].pos;
+
             bullet[i].pos.x += bullet[i].direction.x * speed;
             bullet[i].pos.y += bullet[i].direction.y * speed;
 
@@ -52,10 +57,22 @@ void bulletUpdate(Bullets bullet[], float speed, Level *level){
     }
 }
 
-void drawBullet(Bullets bullet[]){
+void drawBullet(Bullets bullet[], Color bulletColor){
     for (int i = 0; i < bulletCapacity; i++){
         if(bullet[i].active){
-            DrawCircleV(bullet[i].pos, bullet[i].radius, RED);
+
+            if(player.isMoving){
+                DrawCircleV(bullet[i].previousPreviousPos, bullet[i].radius,  Fade(bulletColor, 0.25));
+                DrawCircleV(bullet[i].previousPos, bullet[i].radius,  Fade(bulletColor, 0.5) );
+            }
+            else{
+                Vector2 firstTrail = {bullet[i].pos.x - (bullet[i].direction.x * 8), bullet[i].pos.y - (bullet[i].direction.y * 8)};
+                DrawCircleV(firstTrail, bullet[i].radius,  Fade(bulletColor, 0.5));
+            }
+
+
+            DrawCircleV(bullet[i].pos, bullet[i].radius, bulletColor);
+            
         }
     }
 }
@@ -66,6 +83,7 @@ void resetBullets(Bullets bullet[]){
         bullet[i].pos = (Vector2){0,0};
         bullet[i].radius = 0;
         bullet[i].direction = (Vector2){0,0};
+        bullet[i].previousPos = (Vector2){0,0};
     }
 }
 
