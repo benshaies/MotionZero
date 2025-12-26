@@ -5,6 +5,7 @@
 #include "raylib.h"
 #include "enemy.h"
 #include "texture.h"
+#include "menu.h"
 
     typedef enum{
         MENU,

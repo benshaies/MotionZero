@@ -47,6 +47,7 @@ set(SOURCES
     ../src/gameState.c
     ../src/texture.c
     ../src/animation.c
+    ../src/menu.c
 )
 
 # Create executable

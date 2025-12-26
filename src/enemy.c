@@ -19,9 +19,9 @@ void enemyInit(Vector2 pos, int type){
                     enemy[i].enemyColor = YELLOW;
 
                     enemy[i].bullets[bulletCapacity];
-                    enemy[i].bulletDelay = 2;
+                    enemy[i].bulletDelay = 1.5;
                     enemy[i].bulletTimer = GetTime();
-                    enemy[i].bulletNormalSpeed = 8;
+                    enemy[i].bulletNormalSpeed = 10;
                     enemy[i].bulletSlowSpeed = 2.5;
 
                     animationInit(&enemy[i].anim, 0, enemyTilesetTexture, 16, 4, 0, 0);
@@ -30,7 +30,7 @@ void enemyInit(Vector2 pos, int type){
                     enemy[i].enemyColor = RED;
 
                     enemy[i].bullets[bulletCapacity];
-                    enemy[i].bulletDelay = 5;
+                    enemy[i].bulletDelay = 4;
                     enemy[i].bulletTimer = GetTime();
                     enemy[i].bulletNormalSpeed = 17.5;
                     enemy[i].bulletSlowSpeed = 6;
@@ -43,7 +43,7 @@ void enemyInit(Vector2 pos, int type){
                     enemy[i].bullets[bulletCapacity];
                     enemy[i].bulletDelay = 0.5;
                     enemy[i].bulletTimer = GetTime();
-                    enemy[i].bulletNormalSpeed = 6;
+                    enemy[i].bulletNormalSpeed = 8.5;
                     enemy[i].bulletSlowSpeed = 1;
 
                     animationInit(&enemy[i].anim, 0, enemyTilesetTexture, 16, 4, 0, 32);
@@ -61,7 +61,7 @@ void enemyFire(int i){
 
     if(enemy[i].active){
 
-        if(fabs(enemy[i].pos.x - player.pos.x) <= 750 || fabs(enemy[i].pos.y - player.pos.y) <= 750){
+        if(fabs(enemy[i].pos.x - player.pos.x) <= 1250 && fabs(enemy[i].pos.y - player.pos.y) <= 1250){
             if(GetTime() - enemy[i].bulletTimer >= enemy[i].bulletDelay){
                 bulletInit(enemy[i].bullets, enemy[i].pos);
                 enemy[i].bulletTimer = GetTime();
@@ -104,5 +104,9 @@ void resetEnemies(){
     for(int i = 0; i < ENEMY_NUM; i++){
         resetBullets(enemy[i].bullets);
         enemy[i].bulletTimer = 0;
+        enemy[i].active = false;
+        enemy[i].pos = (Vector2){0,0};
+        enemy[i].type = -1;
+        enemy[i].rec = (Rectangle){0,0,0,0};
     }
 }

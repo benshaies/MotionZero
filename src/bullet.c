@@ -2,7 +2,7 @@
 #include "player.h"
 #include "raymath.h"
 
-int bulletCapacity = 10;
+int bulletCapacity = 20;
 
 
 void bulletInit(Bullets bullet[], Vector2 enemyPos){
@@ -11,7 +11,7 @@ void bulletInit(Bullets bullet[], Vector2 enemyPos){
             bullet[i].active = true;
             bullet[i].pos = (Vector2){enemyPos.x + 37.5, enemyPos.y + 37.5};
             bullet[i].radius = 7.5;  
-            bullet[i].direction = (Vector2){player.hitbox.x + player.hitbox.width/2 - enemyPos.x, player.hitbox.y + player.hitbox.height/2 - enemyPos.y};
+            bullet[i].direction = (Vector2){(player.hitbox.x + (GetRandomValue(-10, 10))) + /*player.hitbox.width/2*/ - enemyPos.x, (player.hitbox.y + (GetRandomValue(-10, 10))) + /*player.hitbox.height/2*/ - enemyPos.y};
             bullet[i].direction = Vector2Normalize(bullet[i].direction);
             
             break;

@@ -14,17 +14,21 @@ void gameInit(){
 
     loadTexture();
 
+    //Load menu
+    menuInit();
+
     //Loads level one
     levelInit(&levelOne, 1);
     loadLevel(&levelOne);
-    loadLevelEnemies(&levelOne);
+    //loadLevelEnemies(&levelOne);
 
     //Load level two
+    levelInit(&levelTwo, 2);
+    loadLevel(&levelTwo);
 
 
-
-    game.currentState = PLAYING;
-    game.currentLevel = &levelOne;
+    game.currentState = MENU;
+    game.currentLevel = &levelTwo;
 
     playerInit(game.currentLevel->startPos); 
 
@@ -32,13 +36,26 @@ void gameInit(){
     camera = (Camera2D){0};
     camera.target = player.pos;
     camera.offset = (Vector2){500, 500};
-    camera.zoom = 1.0f; 
+    camera.zoom = 0.75f; 
     
 }
 
 void gameUpdate(){
     switch (game.currentState){
         case MENU:
+            switch (updateMenu()){
+                case 1:
+                    loadLevelEnemies(&levelOne);
+                    game.currentLevel = &levelOne;
+                    game.currentState = RESPAWN;
+                    break;
+                case 2:
+                    loadLevelEnemies(&levelTwo);
+                    game.currentLevel = &levelTwo;
+                    game.currentState = RESPAWN;
+                    break;
+            }
+            break;
             
         case PLAYING:
             //Update camera target with player position
@@ -48,7 +65,7 @@ void gameUpdate(){
             playerUpdate(game.currentLevel);
 
             if(IsKeyPressed(KEY_SPACE)){
-                game.currentState = DEAD;
+                game.currentState = MENU;
             }
 
             break;
@@ -60,7 +77,7 @@ void gameUpdate(){
             if (deathFrameCount >= 300){
                 game.currentState = RESPAWN;
                 deathFrameCount = 0;
-                camera.zoom = 1.0;
+                camera.zoom = 0.75;
             }
             break;
         case RESPAWN:
@@ -68,6 +85,7 @@ void gameUpdate(){
             game.currentState = PLAYING;
             resetPlayer(game.currentLevel);
             resetEnemies();
+            loadLevelEnemies(game.currentLevel);
             break;
         case PAUSED:
     }
@@ -77,7 +95,8 @@ void gameDraw(){
 
     switch (game.currentState){
         case MENU:
-            ClearBackground(BLACK);
+            ClearBackground(WHITE);
+            drawMenu();
             break;
         case PLAYING:
             BeginMode2D(camera);

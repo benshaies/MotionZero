@@ -41,7 +41,6 @@ void playerUpdate(Level *level)
 
     playerCollisions(level);
 
-    printf("x:%f y%f\n", player.pos.x, player.pos.y);
     if(IsKeyPressed(KEY_F)){
         player.pos = level->startPos;
     }
@@ -155,10 +154,13 @@ void playerCollisions(Level *level)
                 {
                     if (CheckCollisionCircleRec(enemy[i].bullets[j].pos, enemy[i].bullets[j].radius, player.hitbox))
                     {
-                        deleteBullet(enemy[i].bullets, i);
-                        game.currentState = DEAD;
-                        return;
-                        break;
+                        deleteBullet(enemy[i].bullets, j);
+                        if(!enemy[i].bullets[j].active){
+                             game.currentState = DEAD;
+                            return;
+                            break;
+                        }
+                       
                     }
                 }
             }
@@ -184,6 +186,7 @@ void drawPlayer()
     else if(!player.isMoving){
         playAnimation(&player.notMovingAnim, player.rec, 1, 0.15f);
     }
+
 
 
     
