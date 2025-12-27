@@ -1,6 +1,7 @@
 #include "bullet.h"
 #include "player.h"
 #include "raymath.h"
+#include "stdio.h"
 
 int bulletCapacity = 20;
 
@@ -11,7 +12,11 @@ void bulletInit(Bullets bullet[], Vector2 enemyPos){
             bullet[i].active = true;
             bullet[i].pos = (Vector2){enemyPos.x + 37.5, enemyPos.y + 37.5};
             bullet[i].radius = 7.5;  
-            bullet[i].direction = (Vector2){(player.hitbox.x + (GetRandomValue(-10, 10))) + /*player.hitbox.width/2*/ - enemyPos.x, (player.hitbox.y + (GetRandomValue(-10, 10))) + /*player.hitbox.height/2*/ - enemyPos.y};
+
+            Vector2 direction = {player.pos.x - player.oldPos.x, player.pos.y - player.oldPos.y};
+            Vector2 aimDirection = {player.hitbox.x + GetRandomValue(-10, 10) + (direction.x * 45), player.hitbox.y + GetRandomValue(-10,10) + (direction.y * 45)};
+            printf("x:%f y:%f\n", direction.x, direction.y);
+            bullet[i].direction = (Vector2){aimDirection.x - enemyPos.x, aimDirection.y - enemyPos.y};
             bullet[i].direction = Vector2Normalize(bullet[i].direction);
             
             break;

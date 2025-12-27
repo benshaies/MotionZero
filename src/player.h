@@ -12,6 +12,7 @@
 
     typedef struct{
         Vector2 pos;
+        Vector2 oldPos;
         Rectangle rec;
         Rectangle hitbox;
         

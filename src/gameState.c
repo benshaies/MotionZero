@@ -74,7 +74,7 @@ void gameUpdate(){
             if(camera.zoom < 2.5f){
                 camera.zoom += 0.05;
             }
-            if (deathFrameCount >= 300){
+            if (deathFrameCount >= 210){
                 game.currentState = RESPAWN;
                 deathFrameCount = 0;
                 camera.zoom = 0.75;

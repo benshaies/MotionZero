@@ -48,6 +48,9 @@ void playerUpdate(Level *level)
 
 void playerMovement()
 {
+
+    player.oldPos = player.pos;
+
     if (IsKeyDown(KEY_W))
     {
         player.direction.y -= 1;
