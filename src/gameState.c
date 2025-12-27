@@ -60,6 +60,17 @@ void gameUpdate(){
         case PLAYING:
             //Update camera target with player position
             camera.target = (Vector2){player.rec.x + player.rec.width/2, player.rec.y + player.rec.height/2};
+
+            if(!player.isMoving){
+                if(camera.zoom <= 0.90f){
+                    camera.zoom += 0.01f;
+                }
+            }
+            else{
+                if(camera.zoom > 0.75f){
+                    camera.zoom -= 0.01;
+                }
+            }
         
             updateEnemy(game.currentLevel);
             playerUpdate(game.currentLevel);

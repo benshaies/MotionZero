@@ -41,7 +41,7 @@ void enemyInit(Vector2 pos, int type){
                     enemy[i].enemyColor = PURPLE;
 
                     enemy[i].bullets[bulletCapacity];
-                    enemy[i].bulletDelay = 0.5;
+                    enemy[i].bulletDelay = 0.75;
                     enemy[i].bulletTimer = GetTime();
                     enemy[i].bulletNormalSpeed = 8.5;
                     enemy[i].bulletSlowSpeed = 1;

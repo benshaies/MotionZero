@@ -71,8 +71,11 @@ void drawBullet(Bullets bullet[], Color bulletColor){
                 DrawCircleV(bullet[i].previousPos, bullet[i].radius,  Fade(bulletColor, 0.5) );
             }
             else{
+                DrawCircleV(bullet[i].pos, bullet[i].radius + 4, Fade(SKYBLUE, 0.75));
+                
                 Vector2 firstTrail = {bullet[i].pos.x - (bullet[i].direction.x * 8), bullet[i].pos.y - (bullet[i].direction.y * 8)};
                 DrawCircleV(firstTrail, bullet[i].radius,  Fade(bulletColor, 0.5));
+               
             }
 
 
