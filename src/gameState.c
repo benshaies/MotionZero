@@ -10,6 +10,28 @@ Level levelTwo;
 
 int deathFrameCount = 0;
 
+void cameraUpdate(){
+    
+    Vector2 direction = {player.pos.x - player.oldPos.x, player.pos.y - player.oldPos.y};
+    Vector2 cameraDirection = {player.hitbox.x + (direction.x * 45), player.hitbox.y + (direction.y * 45)};
+
+    //Update camera target with player position
+    camera.target = (Vector2){player.rec.x + player.rec.width/2, player.rec.y + player.rec.height/2};
+
+   
+
+    if(!player.isMoving){
+        if(camera.zoom <= 0.90f){
+            camera.zoom += 0.01f;
+        }
+    }
+    else{
+        if(camera.zoom > 0.75f){
+            camera.zoom -= 0.01;
+        }
+    }
+}
+
 void gameInit(){
 
     loadTexture();
@@ -58,20 +80,8 @@ void gameUpdate(){
             break;
             
         case PLAYING:
-            //Update camera target with player position
-            camera.target = (Vector2){player.rec.x + player.rec.width/2, player.rec.y + player.rec.height/2};
-
-            if(!player.isMoving){
-                if(camera.zoom <= 0.90f){
-                    camera.zoom += 0.01f;
-                }
-            }
-            else{
-                if(camera.zoom > 0.75f){
-                    camera.zoom -= 0.01;
-                }
-            }
-        
+            
+            cameraUpdate();
             updateEnemy(game.currentLevel);
             playerUpdate(game.currentLevel);
 

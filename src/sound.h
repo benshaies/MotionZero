@@ -2,7 +2,6 @@
 #define SOUND_H
 #include "raylib.h"
 
-    Sound 
 
 
 #endif
