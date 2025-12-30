@@ -39,6 +39,9 @@ void gameInit(){
     //Load menu
     menuInit();
 
+    //Load Sounds
+    loadSound();
+
     //Loads level one
     levelInit(&levelOne, 1);
     loadLevel(&levelOne);
@@ -66,6 +69,8 @@ void gameUpdate(){
     switch (game.currentState){
         case MENU:
             switch (updateMenu()){
+                case 0:
+                    break;
                 case 1:
                     loadLevelEnemies(&levelOne);
                     game.currentLevel = &levelOne;
@@ -84,11 +89,12 @@ void gameUpdate(){
             cameraUpdate();
             updateEnemy(game.currentLevel);
             playerUpdate(game.currentLevel);
+            UpdateMusicStream(game.currentLevel->music);
 
             if(IsKeyPressed(KEY_SPACE)){
                 game.currentState = MENU;
+                menuState = MENU;
             }
-
             break;
         case DEAD:
             deathFrameCount++;
@@ -121,8 +127,7 @@ void gameDraw(){
             break;
         case PLAYING:
             BeginMode2D(camera);
-
-                
+ 
                 drawLevel(game.currentLevel);
                 drawPlayer();
                 drawEnemy();

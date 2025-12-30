@@ -15,7 +15,6 @@ void bulletInit(Bullets bullet[], Vector2 enemyPos){
 
             Vector2 direction = {player.pos.x - player.oldPos.x, player.pos.y - player.oldPos.y};
             Vector2 aimDirection = {player.hitbox.x + GetRandomValue(-10, 10) + (direction.x * 45), player.hitbox.y + GetRandomValue(-10,10) + (direction.y * 45)};
-            printf("x:%f y:%f\n", direction.x, direction.y);
             bullet[i].direction = (Vector2){aimDirection.x - enemyPos.x, aimDirection.y - enemyPos.y};
             bullet[i].direction = Vector2Normalize(bullet[i].direction);
             
@@ -71,7 +70,7 @@ void drawBullet(Bullets bullet[], Color bulletColor){
                 DrawCircleV(bullet[i].previousPos, bullet[i].radius,  Fade(bulletColor, 0.5) );
             }
             else{
-                DrawCircleV(bullet[i].pos, bullet[i].radius + 4, Fade(SKYBLUE, 0.75));
+                DrawCircleV(bullet[i].pos, bullet[i].radius + 3.5, Fade(SKYBLUE, 0.5));
                 
                 Vector2 firstTrail = {bullet[i].pos.x - (bullet[i].direction.x * 8), bullet[i].pos.y - (bullet[i].direction.y * 8)};
                 DrawCircleV(firstTrail, bullet[i].radius,  Fade(bulletColor, 0.5));

@@ -4,10 +4,13 @@
 #include "enemy.h"
 #include "gameState.h"
 #include "texture.h"
+#include "sound.h"
 
 Player player;
 
 bool isMovingRight;
+
+int walkingSoundFrames = 0;
 
 void playerInit(Vector2 startPos)
 {
@@ -30,25 +33,37 @@ void playerInit(Vector2 startPos)
     animationInit(&player.graveStoneAnim, 0, graveStoneTexture, 16, 6, 0, 0);
 
     player.animState = PLAYER_DEATHANIM;
+
+    player.deathSound[0] = death[0];
+    player.deathSound[1] = death[1];
+    player.deathSound[2] = death[2];
+    SetSoundVolume(player.deathSound[0], 0.25);
+    SetSoundVolume(player.deathSound[1], 0.25);
+    SetSoundVolume(player.deathSound[2], 0.25);
 }
 
 void playerUpdate(Level *level)
 {
-
     
+    if(player.isMoving){
+        walkingSoundFrames++;
+        if(walkingSoundFrames >= 15){
+            SetSoundVolume(walking, 0.12);
+            PlaySound(walking);
+            walkingSoundFrames = 0;
+        }
+    }
+    else{
+        walkingSoundFrames = 0;
+    }
 
     playerMovement();
 
     playerCollisions(level);
-
-    if(IsKeyPressed(KEY_F)){
-        player.pos = level->startPos;
-    }
 }
 
 void playerMovement()
 {
-
     player.oldPos = player.pos;
 
     if (IsKeyDown(KEY_W))
@@ -159,6 +174,8 @@ void playerCollisions(Level *level)
                     {
                         deleteBullet(enemy[i].bullets, j);
                         if(!enemy[i].bullets[j].active){
+                            int ran = GetRandomValue(0,2);
+                            PlaySound(player.deathSound[ran]);
                              game.currentState = DEAD;
                             return;
                             break;
@@ -208,6 +225,7 @@ void drawPlayerDeath(){
 
     switch(player.animState){
         case PLAYER_DEATHANIM:
+            
             if(playAnimationOnce(&player.deathAnim, player.rec, 1, 0.15f)){
                 player.animState = GRAVESTONE_ANIM;
                 

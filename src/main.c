@@ -4,6 +4,7 @@
 #include "level.h"
 #include "gameState.h"
 #include "texture.h"
+#include "sound.h"
 
 const int screenWidth = 1000;
 const int screenHeight = 1000;
@@ -28,6 +29,7 @@ int main(void){
 
         draw(); 
     }
+    unloadSound();
     unloadTexture();
     CloseWindow();
     return 0;

@@ -12,6 +12,9 @@
     extern Texture2D levelTilesetTexture;
     extern Texture2D enemyTilesetTexture;
 
+    extern Texture2D mainMenuTexture;
+    extern Texture2D howToPlayTexture;
+
     void loadTexture();
 
     void unloadTexture();

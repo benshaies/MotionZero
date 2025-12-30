@@ -3,97 +3,69 @@
 
 Menu menuState;
 
-bool isHovering(Rectangle rec){
-    if(CheckCollisionPointRec(GetMousePosition(), rec)){
-        return true;
-    }
-    else{
-        return false;
-    }
-}
+Animation mainMenuAnimation, howToPlayAnimation;
 
-bool isClicked(Rectangle rec){
-    if(isHovering(rec) && IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
-        return true;
-    }
-    else{
-        return false;
-    }
-}
-
-void buttonArrayInit(){
-    for(int i = 0; i < BUTTON_NUM; i++){
-        buttons[i].id = -1;
-        buttons[i].rec = (Rectangle){0,0,0,0};
-        buttons[i].isHovering = false;
-        buttons[i].isClicked = false;
-        buttons[i].active = false;
-    }
-}
-
-void createButton(int id, Rectangle rec){
-    for(int i = 0; i < BUTTON_NUM; i++){
-        if(!buttons[i].active){
-            buttons[i].id = id;
-            buttons[i].rec = rec;
-            buttons[i].isClicked = false;
-            buttons[i].isHovering = false;
-            buttons[i].active = true;
-            buttons[i].color = BLACK;
-
-            break;
-        }
-    }
-}
 
 void menuInit(){
     menuState = MAIN_MENU;
-    buttonArrayInit();
-
-    createButton(1, (Rectangle){200, 500, 200, 100});
-    createButton(2, (Rectangle){600, 500, 200, 100});
+    
+    animationInit(&mainMenuAnimation, 0, mainMenuTexture, 1000, 9, 0, 0);
+    animationInit(&howToPlayAnimation, 0, howToPlayTexture, 1000, 4, 0, 0);
 
 }
 
 int updateMenu(){
-    for(int i = 0; i < BUTTON_NUM; i++){
-        if(buttons[i].active){
+    
+    switch (menuState){
+        case MAIN_MENU:
+            if(IsKeyPressed(KEY_ENTER)){
+                menuState = LEVEL_SELECTION;
+            }
+            else if(IsKeyPressed(KEY_TAB)){
+                menuState = GUIDE_SCREEN;
+            }
+            return 0;
+            break;
+        case GUIDE_SCREEN:
 
-            if(isHovering(buttons[i].rec)){
-                buttons[i].color = ORANGE;
+            if(IsKeyPressed(KEY_TAB)){
+                menuState = MAIN_MENU;
             }
-            else{
-                buttons[i].color = BLACK;
+            return 0;
+            break;
+
+        case START_PRESSED:
+
+        case LEVEL_SELECTION:
+            if(IsKeyPressed(KEY_J)){
+                return 1;
+            }
+            else if(IsKeyPressed(KEY_K)){
+                return 2;
             }
 
-            if(isClicked(buttons[i].rec)){
-                return buttons[i].id;
-                break;
-            }
-        }
+            break;
+        
     }
 }
 
 void drawMenu(){
 
-    switch (menuState){
+    switch(menuState){
         case MAIN_MENU:
-            DrawText("Motion Zero", 275, 200, 75, RED);
-
-            for(int i = 0; i < BUTTON_NUM; i++){
-                if(buttons[i].active){
-                    DrawRectangleRec(buttons[i].rec, buttons[i].color);
-
-                    if(buttons[i].id == 1){
-                        DrawText("1", buttons[i].rec.x + buttons[i].rec.width/2, buttons[i].rec.y + buttons[i].rec.height/2, 35, WHITE);
-                    }
-                    else if (buttons[i].id == 2){
-                        DrawText("2", buttons[i].rec.x + buttons[i].rec.width/2, buttons[i].rec.y + buttons[i].rec.height/2, 35, WHITE);
-                    }
-                    
-                }
-            }
+            playAnimation(&mainMenuAnimation, (Rectangle){0,0,1000,1000}, 1, 0.1);
+            playAnimation(&player.sideAnim, (Rectangle){450, 850, 100, 100}, 1, 0.25);
             break;
+        case GUIDE_SCREEN:
+            playAnimation(&howToPlayAnimation, (Rectangle){0,0, 1000, 1000}, 1, 0.25);
+            break;
+
+        case START_PRESSED:
+
+        case LEVEL_SELECTION:
+            DrawText("Level One - PRESS J", 300, 300, 50, BLACK);
+            DrawText("Level Two - PRESS K", 300, 600, 50, BLACK);
+
     }
     
 

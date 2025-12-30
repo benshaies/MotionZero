@@ -24,6 +24,8 @@
 
         Animation anim;
 
+        Sound fireSound;
+
     }Enemy;
 
     extern Enemy enemy[ENEMY_NUM];

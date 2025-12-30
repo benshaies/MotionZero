@@ -6,6 +6,7 @@
 #include "enemy.h"
 #include "texture.h"
 #include "menu.h"
+#include "sound.h"
 
     typedef enum{
         MENU,

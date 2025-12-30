@@ -28,6 +28,11 @@
         bool playDownAnim, playSideAnim, playUpAnim;
 
         State animState;
+
+        //Sound variables
+        Sound deathSound[3];
+
+
     }Player;
 
     extern Player player;

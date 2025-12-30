@@ -15,6 +15,9 @@
         Vector2 startPos;
         Rectangle *rec;
         int RecNum;
+        const char *filename;
+        Music music;
+        float musicVolume;
     }Level;
 
     void loadLevel(Level *level);

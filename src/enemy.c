@@ -2,6 +2,7 @@
 #include "player.h"
 #include "math.h"
 #include "texture.h"
+#include "sound.h"
 
 Enemy enemy[ENEMY_NUM];
 
@@ -25,6 +26,10 @@ void enemyInit(Vector2 pos, int type){
                     enemy[i].bulletSlowSpeed = 2.5;
 
                     animationInit(&enemy[i].anim, 0, enemyTilesetTexture, 16, 4, 0, 0);
+
+                    enemy[i].fireSound = mediumShoot;
+                    SetSoundVolume(enemy[i].fireSound, 0.25);
+
                     break;
                 case 57: // Sniper
                     enemy[i].enemyColor = RED;
@@ -36,6 +41,9 @@ void enemyInit(Vector2 pos, int type){
                     enemy[i].bulletSlowSpeed = 6;
 
                     animationInit(&enemy[i].anim, 0, enemyTilesetTexture, 16, 4, 0, 16);
+
+                    enemy[i].fireSound = sniperShoot;
+                    SetSoundVolume(enemy[i].fireSound, 0.25);
                     break;
                 case 58: //Slow but a lot
                     enemy[i].enemyColor = PURPLE;
@@ -47,6 +55,9 @@ void enemyInit(Vector2 pos, int type){
                     enemy[i].bulletSlowSpeed = 1;
 
                     animationInit(&enemy[i].anim, 0, enemyTilesetTexture, 16, 4, 0, 32);
+
+                    enemy[i].fireSound = slowShoot;
+                    SetSoundVolume(enemy[i].fireSound, 0.25);
                     break;
                 }
             
@@ -63,6 +74,7 @@ void enemyFire(int i){
 
         if(fabs(enemy[i].pos.x - player.pos.x) <= 1250 && fabs(enemy[i].pos.y - player.pos.y) <= 1250){
             if(GetTime() - enemy[i].bulletTimer >= enemy[i].bulletDelay){
+                PlaySound(enemy[i].fireSound);
                 bulletInit(enemy[i].bullets, enemy[i].pos);
                 enemy[i].bulletTimer = GetTime();
             }

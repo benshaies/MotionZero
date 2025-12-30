@@ -48,6 +48,7 @@ set(SOURCES
     ../src/texture.c
     ../src/animation.c
     ../src/menu.c
+    ../src/sound.c
 )
 
 # Create executable
