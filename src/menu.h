@@ -4,17 +4,24 @@
 #include "animation.h"
 #include "texture.h"
 #include "player.h"
+#include "level.h"
 
     #define BUTTON_NUM 10
 
     typedef enum{
         MAIN_MENU,
         GUIDE_SCREEN,
-        START_PRESSED,
         LEVEL_SELECTION,
+        START_PRESSED,
+        GUIDE_SCREEN_PRESSED,
+        
     }Menu;
 
     extern Menu menuState;
+
+    bool rectangleIn();
+
+    bool rectangleOut();
 
     void menuInit();
 

@@ -7,12 +7,22 @@
 #include "sound.h"
 #include "player.h"
 
-int wallTileIds[21] = {0, 1, 2, 3, 4, 5, 7,  16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29};
+int wallTileIds[24] = {0, 1, 2, 3, 4, 5, 7,  16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 32, 33, 34};
 
 //Sets up level struct and allocated memory for array
 void levelInit(Level *level, int levelNum){
     
     switch (levelNum){
+        case 0:
+            level->num = level->num;
+            level->width = 17;
+            level->height = 8;
+            level->startPos = (Vector2){8 * TILE_SIZE, 6 * TILE_SIZE};
+
+            level->filename = "../levels/levelSelection.csv";
+
+            break;
+
         case 1:
             level->num = levelNum;
             level->width = 32;
@@ -30,7 +40,7 @@ void levelInit(Level *level, int levelNum){
             level->rec[2] = (Rectangle){2300, 100, 800, 2200};
 
             level->music = levelOneMusic;
-            level->musicVolume = 0.05;
+            level->musicVolume = 0.3;
 
             break;
         
@@ -52,7 +62,7 @@ void levelInit(Level *level, int levelNum){
             level->rec[4] = (Rectangle){6209, 92, 1016, 921};
 
             level->music = levelTwoMusic;
-            level->musicVolume = 0.02;
+            level->musicVolume = 0.3;
 
             break;
     }
@@ -69,6 +79,7 @@ void loadLevel(Level *level){
     FILE *file = fopen(level->filename, "r");
     if(!file){
         printf("Failed to open %s\n", level->filename);
+        CloseWindow();
         return;
     }
 
@@ -120,7 +131,7 @@ void drawLevel(Level *level){
 bool isWallTile(int tileId){
     bool wall;
 
-    for(int i  = 0; i < 21; i++){
+    for(int i  = 0; i < 24; i++){
         if(tileId == wallTileIds[i]){
             wall = true;
             break;

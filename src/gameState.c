@@ -53,7 +53,7 @@ void gameInit(){
 
 
     game.currentState = MENU;
-    game.currentLevel = &levelTwo;
+    game.currentLevel = &levelOne;
 
     playerInit(game.currentLevel->startPos); 
 
@@ -69,14 +69,16 @@ void gameUpdate(){
     switch (game.currentState){
         case MENU:
             switch (updateMenu()){
-                case 0:
+                case -1: // Still in menu stuff
                     break;
-                case 1:
+                case 0: // level selection
+                    break;
+                case 1: // Level One
                     loadLevelEnemies(&levelOne);
                     game.currentLevel = &levelOne;
                     game.currentState = RESPAWN;
                     break;
-                case 2:
+                case 2:  // level Two
                     loadLevelEnemies(&levelTwo);
                     game.currentLevel = &levelTwo;
                     game.currentState = RESPAWN;
@@ -91,7 +93,7 @@ void gameUpdate(){
             playerUpdate(game.currentLevel);
             UpdateMusicStream(game.currentLevel->music);
 
-            if(IsKeyPressed(KEY_SPACE)){
+            if(IsKeyPressed(KEY_TAB)){
                 game.currentState = MENU;
                 menuState = MENU;
             }
@@ -113,6 +115,8 @@ void gameUpdate(){
             resetPlayer(game.currentLevel);
             resetEnemies();
             loadLevelEnemies(game.currentLevel);
+
+            
             break;
         case PAUSED:
     }
