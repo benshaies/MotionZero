@@ -7,6 +7,15 @@
 #include "texture.h"
 #include "menu.h"
 #include "sound.h"
+#include "stdio.h"
+
+    typedef struct{
+        int hightestLevel;
+        float deaths[3];
+        float bestTimes[3];
+    }saveData;
+
+    extern saveData save;
 
     typedef enum{
         MENU,
@@ -22,6 +31,10 @@
     }Game;
     
     extern Game game;
+
+    int loadSave(saveData *save);
+
+    void saveGame(saveData *save);
 
     void gameInit();
 

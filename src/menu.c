@@ -12,7 +12,7 @@ Level levelSelection;
 
 Camera2D camera1;
 
-
+int levelSelectionGates[3];
 
 
 bool rectangleIn(){
@@ -24,8 +24,6 @@ bool rectangleIn(){
         transitionRec.x = 0;
         return true;
     }
-
-
 }
 
 bool rectangleOut(){
@@ -40,8 +38,37 @@ bool rectangleOut(){
             return true;
         }
     }
-
     
+    
+    
+}
+
+int levelSelectionUpdate(){
+
+    if(save.hightestLevel == 1){
+        
+    }
+    else if(save.hightestLevel == 2){
+        levelSelection.array[0][levelSelectionGates[1]] = 6;
+    }
+    else if(save.hightestLevel == 3){
+        levelSelection.array[0][levelSelectionGates[1]] = 6;
+        levelSelection.array[0][levelSelectionGates[2]] = 6;
+    }
+
+    if(CheckCollisionRecs(player.rec, (Rectangle){levelSelectionGates[0] * TILE_SIZE, -100, TILE_SIZE, TILE_SIZE})){
+            return 1;
+    }
+    else if(CheckCollisionRecs(player.rec, (Rectangle){levelSelectionGates[1] * TILE_SIZE, -100, TILE_SIZE, TILE_SIZE}) && (save.hightestLevel == 2 || save.hightestLevel == 3) ){
+            return 2;
+    }
+    else if(CheckCollisionRecs(player.rec, (Rectangle){levelSelectionGates[2] * TILE_SIZE, -100, TILE_SIZE, TILE_SIZE}) && save.hightestLevel == 3){
+            return 3;
+    }
+
+
+
+
     
 }
 
@@ -50,6 +77,10 @@ void menuInit(){
 
     playerAnimationRec = (Rectangle){467.5, 850, 75, 75};
 
+    levelSelectionGates[0] = 3;
+    levelSelectionGates[1] = 8;
+    levelSelectionGates[2] = 13;
+
     menuState = MAIN_MENU;
     
     animationInit(&mainMenuAnimation, 0, mainMenuTexture, 1000, 9, 0, 0);
@@ -57,6 +88,7 @@ void menuInit(){
 
     levelInit(&levelSelection, 0);
     loadLevel(&levelSelection);
+
 
     camera1 = (Camera2D){0};
     camera1.target = player.pos;
@@ -89,14 +121,12 @@ int updateMenu(){
         case LEVEL_SELECTION:
             rectangleOut();
             camera1.target = player.pos;
-            if(IsKeyPressed(KEY_SPACE)){
-                return 1;
-            }
+            
 
             playerUpdate(&levelSelection);
             
             
-
+            return levelSelectionUpdate();
             break;
 
         case START_PRESSED:

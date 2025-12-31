@@ -29,6 +29,7 @@ int main(void){
 
         draw(); 
     }
+    saveGame(&save);
     unloadSound();
     unloadTexture();
     CloseWindow();

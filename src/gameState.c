@@ -10,6 +10,29 @@ Level levelTwo;
 
 int deathFrameCount = 0;
 
+saveData save;
+
+int loadSave(saveData *save)
+{
+    FILE *file = fopen("save.dat", "rb");
+    if (!file) return 0;  // no save yet
+
+    size_t read = fread(save, sizeof(saveData), 1, file);
+    fclose(file);
+
+    return read == 1;
+}
+
+void saveGame(saveData *save)
+{
+    FILE *file = fopen("save.dat", "wb");
+    if (!file) return;
+
+    fwrite(save, sizeof(saveData), 1, file);
+    fclose(file);
+}
+
+
 void cameraUpdate(){
     
     Vector2 direction = {player.pos.x - player.oldPos.x, player.pos.y - player.oldPos.y};
@@ -33,6 +56,13 @@ void cameraUpdate(){
 }
 
 void gameInit(){
+
+    if(!loadSave(&save)){
+        save.hightestLevel = 1;
+    }
+    else{
+        save.hightestLevel = 3;
+    }
 
     loadTexture();
 
@@ -82,6 +112,8 @@ void gameUpdate(){
                     loadLevelEnemies(&levelTwo);
                     game.currentLevel = &levelTwo;
                     game.currentState = RESPAWN;
+                    break;
+                case 3:
                     break;
             }
             break;
