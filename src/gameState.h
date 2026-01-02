@@ -32,11 +32,16 @@
     typedef struct{
         GameState currentState;
         Level *currentLevel;
+
+        bool isTransitioning;
+        bool isGameStateChange;
+        GameState nextStateGame;
+        Menu nextStateMenu;
     }Game;
     
     extern Game game;
 
-    bool transitionIn(int newState);
+    bool transitionIn();
 
     bool transitionOut();
 

@@ -1,5 +1,10 @@
 #include "menu.h"
 #include "stdio.h"
+#include "animation.h"
+#include "texture.h"
+#include "player.h"
+#include "level.h"
+#include "gameState.h"
 
 
 Menu menuState;
@@ -79,16 +84,23 @@ int updateMenu(){
             playerAnimationRec.y = 850;
             if(IsKeyPressed(KEY_ENTER)){
                 menuState = START_PRESSED;
+                
             }
             else if(IsKeyPressed(KEY_TAB)){
-                menuState = GUIDE_SCREEN_PRESSED;
+                
+                game.isTransitioning = true;
+                game.isGameStateChange = false;
+                game.nextStateMenu = GUIDE_SCREEN;
+                
             }
             return -1;
             break;
         case GUIDE_SCREEN:
 
             if(IsKeyPressed(KEY_TAB)){
-                menuState = MAIN_MENU;
+                game.isTransitioning = true;
+                game.isGameStateChange = false;
+                game.nextStateMenu = MAIN_MENU;
             }
             return -1;
             break;
@@ -110,7 +122,9 @@ int updateMenu(){
             else{
 
                 resetPlayer(&levelSelection);
-                menuState = LEVEL_SELECTION;
+                game.isTransitioning = true;
+                game.isGameStateChange = false;
+                game.nextStateMenu = LEVEL_SELECTION;
                 playerAnimationRec = (Rectangle){467.5, 850, 75, 75};
             }
 

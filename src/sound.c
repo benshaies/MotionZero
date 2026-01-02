@@ -12,7 +12,7 @@ void loadSound(){
     mediumShoot = LoadSound("../sound/mediumShoot.wav");
     slowShoot = LoadSound("../sound/slowShoot.wav");
     sniperShoot = LoadSound("../sound/snipperShoot.wav");
-    death = LoadSound("../sound/death.wav");
+    death = LoadSound("../sound/dead.wav");
 
 
     levelOneMusic = LoadMusicStream("../sound/level1.wav");

@@ -11,7 +11,6 @@ Level levelTwo;
 int deathFrameCount = 0;
 
 Rectangle transitionRec = {-1000, 0, 1000, 1000};
-bool isTransitioning = false;
 
 saveData save;
 
@@ -35,10 +34,9 @@ void saveGame(saveData *save)
     fclose(file);
 }
 
-bool transitionIn(int newState){
-    isTransitioning = true;
+bool transitionIn(){
     if(transitionRec.x < 0){
-        transitionRec.x += 15;
+        transitionRec.x += 25;
         return false;
     }
     else{
@@ -49,12 +47,11 @@ bool transitionIn(int newState){
 
 bool transitionOut(){
     if(transitionRec.x >= 0 && transitionRec.x < 1000){
-        transitionRec.x += 15;
+        transitionRec.x += 25;
         return false;
     }
     else{
         transitionRec.x = -1000;
-        isTransitioning = false;
         return true;
     }
 }
@@ -116,6 +113,7 @@ void gameInit(){
 
     game.currentState = MENU;
     game.currentLevel = &levelOne;
+    game.isTransitioning = false;
 
     playerInit(game.currentLevel->startPos); 
 
@@ -133,12 +131,14 @@ void gameUpdate(){
             switch (updateMenu()){
                 case -1: // Still in menu stuff
                     break;
-                case 0: // level selection
-                    break;
                 case 1: // Level One
+
                     loadLevelEnemies(&levelOne);
                     game.currentLevel = &levelOne;
-                    game.currentState = RESPAWN;
+
+                    game.isTransitioning = true;
+                    game.isGameStateChange = true;
+                    game.nextStateGame = RESPAWN;
                     break;
                 case 2:  // level Two
                     loadLevelEnemies(&levelTwo);

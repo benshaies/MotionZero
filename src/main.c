@@ -11,13 +11,23 @@ const int screenHeight = 1000;
 
 extern Rectangle rec;
 
+typedef enum{
+    TRANSITION_IN,
+    TRANSITION_OUT,
+}transState;
+
+transState transitionState = 0;
+
 void draw(){
     BeginDrawing();
 
 
     ClearBackground(BLACK);
 
+
     gameDraw();
+
+    
 
     DrawRectangleRec(transitionRec, BLACK);
 
@@ -30,11 +40,39 @@ int main(void){
 
     gameInit();
     while (!WindowShouldClose()){
-            gameUpdate();
 
+    
+        draw(); 
+            
+        if(!game.isTransitioning){
+            gameUpdate();
+        }
+        else{
+            switch (transitionState){
+                case 0:
+                    if(transitionIn()){
+                        transitionState = 1;
+                        if(game.isGameStateChange){
+                            game.currentState = game.nextStateGame;
+                        }
+                        else{
+                            menuState = game.nextStateMenu;
+                        }
+                        game.isGameStateChange = NULL;
+                    }
+                    break;
+                
+                case 1:
+                    if(transitionOut()){
+                        transitionState = 0;
+                        game.isTransitioning = false;
+                    }
+                    break;
+            }
+        }        
         
 
-        draw(); 
+        
     }
     saveGame(&save);
     unloadSound();
