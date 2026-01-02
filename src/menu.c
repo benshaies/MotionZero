@@ -1,12 +1,12 @@
 #include "menu.h"
 #include "stdio.h"
 
+
 Menu menuState;
 
 Animation mainMenuAnimation, howToPlayAnimation;
 
 Rectangle playerAnimationRec;
-Rectangle transitionRec = {-1000,0, 1000, 1000};
 
 Level levelSelection;
 
@@ -15,33 +15,8 @@ Camera2D camera1;
 int levelSelectionGates[3];
 
 
-bool rectangleIn(){
-    if(transitionRec.x < 0){
-        transitionRec.x += 50;
-        return false;
-    }
-    else {
-        transitionRec.x = 0;
-        return true;
-    }
-}
 
-bool rectangleOut(){
 
-    if(!(transitionRec.x <= -1000)){
-        if(transitionRec.x >= 0 && transitionRec.x < 1000){
-            transitionRec.x += 50;
-            return false;
-        }
-        else if(transitionRec.x >= 1000){
-            transitionRec.x = -1000;
-            return true;
-        }
-    }
-    
-    
-    
-}
 
 int levelSelectionUpdate(){
 
@@ -111,7 +86,7 @@ int updateMenu(){
             return -1;
             break;
         case GUIDE_SCREEN:
-            rectangleOut();
+
             if(IsKeyPressed(KEY_TAB)){
                 menuState = MAIN_MENU;
             }
@@ -119,7 +94,6 @@ int updateMenu(){
             break;
 
         case LEVEL_SELECTION:
-            rectangleOut();
             camera1.target = player.pos;
             
 
@@ -134,20 +108,19 @@ int updateMenu(){
                 playerAnimationRec.y -= 2;
             }
             else{
-                if(rectangleIn()){
-                    resetPlayer(&levelSelection);
-                    menuState = LEVEL_SELECTION;
-                }
-                
+
+                resetPlayer(&levelSelection);
+                menuState = LEVEL_SELECTION;
+                playerAnimationRec = (Rectangle){467.5, 850, 75, 75};
             }
 
             return -1;
             break;
 
         case GUIDE_SCREEN_PRESSED:
-            if(rectangleIn()){
+
                 menuState = GUIDE_SCREEN;
-            }
+
             return -1;
             break;
 

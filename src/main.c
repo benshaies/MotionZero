@@ -9,12 +9,17 @@
 const int screenWidth = 1000;
 const int screenHeight = 1000;
 
+extern Rectangle rec;
+
 void draw(){
     BeginDrawing();
+
 
     ClearBackground(BLACK);
 
     gameDraw();
+
+    DrawRectangleRec(transitionRec, BLACK);
 
     EndDrawing();
 }
@@ -25,7 +30,9 @@ int main(void){
 
     gameInit();
     while (!WindowShouldClose()){
-        gameUpdate();
+            gameUpdate();
+
+        
 
         draw(); 
     }

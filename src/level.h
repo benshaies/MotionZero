@@ -18,6 +18,8 @@
         const char *filename;
         Music music;
         float musicVolume;
+
+        float time;
     }Level;
 
     void loadLevel(Level *level);

@@ -30,7 +30,9 @@
         State animState;
 
         //Sound variables
-        Sound deathSound[3];
+        Sound deathSound;
+
+        bool levelComplete;
 
 
     }Player;
@@ -50,4 +52,5 @@
     void resetPlayer(Level *level);
 
     void drawPlayerDeath();
+
 #endif

@@ -2,7 +2,7 @@
 #define SOUND_H
 #include "raylib.h"
 
-    extern Sound walking, mediumShoot, sniperShoot, slowShoot, death[3];
+    extern Sound walking, mediumShoot, sniperShoot, slowShoot, death;
     extern Music levelOneMusic, levelTwoMusic;
 
     void loadSound();

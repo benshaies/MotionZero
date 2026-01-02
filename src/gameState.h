@@ -11,11 +11,14 @@
 
     typedef struct{
         int hightestLevel;
-        float deaths[3];
+        int deaths[3];
         float bestTimes[3];
     }saveData;
 
     extern saveData save;
+    
+    extern Rectangle transitionRec;
+    extern bool isTransitioning;
 
     typedef enum{
         MENU,
@@ -23,6 +26,7 @@
         DEAD,
         PAUSED,
         RESPAWN,
+        LEVEL_COMPLETE,
     }GameState;
 
     typedef struct{
@@ -31,6 +35,10 @@
     }Game;
     
     extern Game game;
+
+    bool transitionIn(int newState);
+
+    bool transitionOut();
 
     int loadSave(saveData *save);
 

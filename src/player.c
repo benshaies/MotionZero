@@ -34,17 +34,22 @@ void playerInit(Vector2 startPos)
 
     player.animState = PLAYER_DEATHANIM;
 
-    player.deathSound[0] = death[0];
-    player.deathSound[1] = death[1];
-    player.deathSound[2] = death[2];
-    SetSoundVolume(player.deathSound[0], 0.25);
-    SetSoundVolume(player.deathSound[1], 0.25);
-    SetSoundVolume(player.deathSound[2], 0.25);
+    player.deathSound = death;
+    SetSoundVolume(player.deathSound, 0.25);
+
+    player.levelComplete = false;
 }
 
 void playerUpdate(Level *level)
 {
+
+    if(player.levelComplete){
+        game.currentState = LEVEL_COMPLETE;
+        player.levelComplete = false;
+        return;
+    }
     
+
     if(player.isMoving){
         walkingSoundFrames++;
         if(walkingSoundFrames >= 15){
@@ -156,6 +161,13 @@ void playerCollisions(Level *level)
                         player.pos.y = (y * TILE_SIZE) - player.rec.height - 1;
                     }
                 }
+                else if(level->array[y][x] == 6 && (level->num == 1 || level->num == 2 || level->num == 3)){
+                    Rectangle wallrec = {x * TILE_SIZE, (y * TILE_SIZE) - 100, TILE_SIZE, TILE_SIZE};
+                    if(CheckCollisionRecs(player.rec, wallrec)){
+                        player.levelComplete = true;
+                    }
+                    
+                }
             }
         }   
     }
@@ -174,9 +186,10 @@ void playerCollisions(Level *level)
                     {
                         deleteBullet(enemy[i].bullets, j);
                         if(!enemy[i].bullets[j].active){
-                            int ran = GetRandomValue(0,2);
-                            PlaySound(player.deathSound[ran]);
-                             game.currentState = DEAD;
+                            PlaySound(player.deathSound);
+
+                            save.deaths[level->num-1]++;
+                            game.currentState = DEAD;
                             return;
                             break;
                         }
@@ -193,6 +206,8 @@ void playerCollisions(Level *level)
 
 void drawPlayer()
 {   
+
+    
 
     if(player.playSideAnim){
         playAnimation(&player.sideAnim, player.rec, isMovingRight ? 1 : -1, 0.15f);

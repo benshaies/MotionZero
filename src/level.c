@@ -14,7 +14,7 @@ void levelInit(Level *level, int levelNum){
     
     switch (levelNum){
         case 0:
-            level->num = level->num;
+            level->num = levelNum;
             level->width = 17;
             level->height = 8;
             level->startPos = (Vector2){8 * TILE_SIZE, 6 * TILE_SIZE};
@@ -27,7 +27,7 @@ void levelInit(Level *level, int levelNum){
             level->num = levelNum;
             level->width = 32;
             level->height = 54;
-            level->startPos = (Vector2){4*TILE_SIZE, 51*TILE_SIZE};
+            level->startPos = (Vector2){30*TILE_SIZE, 0*TILE_SIZE}; // 4 & 51
 
             level->filename = "../levels/level1.csv";
 
@@ -41,6 +41,8 @@ void levelInit(Level *level, int levelNum){
 
             level->music = levelOneMusic;
             level->musicVolume = 0.3;
+
+            level->time = 0.0f;
 
             break;
         
@@ -63,6 +65,8 @@ void levelInit(Level *level, int levelNum){
 
             level->music = levelTwoMusic;
             level->musicVolume = 0.3;
+
+            level->time = 0.0f;
 
             break;
     }
@@ -125,7 +129,6 @@ void drawLevel(Level *level){
         
         }
     }
-
 }
 
 bool isWallTile(int tileId){

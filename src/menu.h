@@ -15,7 +15,7 @@
         LEVEL_SELECTION,
         START_PRESSED,
         GUIDE_SCREEN_PRESSED,
-        
+        LEVEL_COMPLETED,
     }Menu;
 
     extern Menu menuState;

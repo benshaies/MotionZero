@@ -10,6 +10,9 @@ Level levelTwo;
 
 int deathFrameCount = 0;
 
+Rectangle transitionRec = {-1000, 0, 1000, 1000};
+bool isTransitioning = false;
+
 saveData save;
 
 int loadSave(saveData *save)
@@ -30,6 +33,30 @@ void saveGame(saveData *save)
 
     fwrite(save, sizeof(saveData), 1, file);
     fclose(file);
+}
+
+bool transitionIn(int newState){
+    isTransitioning = true;
+    if(transitionRec.x < 0){
+        transitionRec.x += 15;
+        return false;
+    }
+    else{
+        transitionRec.x = 0;
+        return true;
+    }
+}
+
+bool transitionOut(){
+    if(transitionRec.x >= 0 && transitionRec.x < 1000){
+        transitionRec.x += 15;
+        return false;
+    }
+    else{
+        transitionRec.x = -1000;
+        isTransitioning = false;
+        return true;
+    }
 }
 
 
@@ -59,9 +86,14 @@ void gameInit(){
 
     if(!loadSave(&save)){
         save.hightestLevel = 1;
-    }
-    else{
-        save.hightestLevel = 3;
+        save.deaths[0] = 0;
+        save.deaths[1] = 0;
+        save.deaths[2] = 0;
+
+        save.bestTimes[0] = 0;
+        save.bestTimes[1] = 0;
+        save.bestTimes[2] = 0;
+
     }
 
     loadTexture();
@@ -125,6 +157,8 @@ void gameUpdate(){
             playerUpdate(game.currentLevel);
             UpdateMusicStream(game.currentLevel->music);
 
+            game.currentLevel->time += GetFrameTime();
+
             if(IsKeyPressed(KEY_TAB)){
                 game.currentState = MENU;
                 menuState = MENU;
@@ -140,17 +174,24 @@ void gameUpdate(){
                 deathFrameCount = 0;
                 camera.zoom = 0.75;
             }
+            game.currentLevel->time = 0.0f;
             break;
         case RESPAWN:
+                game.currentState = PLAYING;
+                resetPlayer(game.currentLevel);
+                resetEnemies();
+                loadLevelEnemies(game.currentLevel);
+                game.currentLevel->time = 0.0f;
 
-            game.currentState = PLAYING;
-            resetPlayer(game.currentLevel);
-            resetEnemies();
-            loadLevelEnemies(game.currentLevel);
-
-            
             break;
-        case PAUSED:
+        case LEVEL_COMPLETE:
+            save.bestTimes[game.currentLevel->num-1] = game.currentLevel->time;
+            if(game.currentLevel->num != 3){
+                save.hightestLevel++;
+            }
+            game.currentState = MENU;
+            menuState = MENU;
+            break;
     }
 }
 
@@ -163,12 +204,16 @@ void gameDraw(){
             break;
         case PLAYING:
             BeginMode2D(camera);
+
+                
  
                 drawLevel(game.currentLevel);
                 drawPlayer();
                 drawEnemy();
-        
+                
             EndMode2D();
+            DrawText(TextFormat("%d", save.deaths[game.currentLevel->num-1]), 0, 0, 50, WHITE);
+            DrawText(TextFormat("%.0f", game.currentLevel->time),0, 75, 50, WHITE);
             break;
 
         case DEAD:
@@ -180,10 +225,8 @@ void gameDraw(){
         
             EndMode2D();
             break;
-        case RESPAWN:
-
-
-        case PAUSED:
+        case LEVEL_COMPLETE:
+            break;
 
     }
 
