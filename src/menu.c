@@ -69,6 +69,11 @@ void menuInit(){
     levelInit(&levelSelection, 0);
     loadLevel(&levelSelection);
 
+    //Main menu music
+    PlayMusicStream(mainMenuMusic);
+    SetMusicVolume(mainMenuMusic, 0.5);
+
+
 
     camera1 = (Camera2D){0};
     camera1.target = player.pos;
@@ -80,6 +85,8 @@ void menuInit(){
 int updateMenu(){
     
     switch (menuState){
+        
+
         case MAIN_MENU:
             playerAnimationRec.y = 850;
             if(IsKeyPressed(KEY_ENTER)){
@@ -91,16 +98,25 @@ int updateMenu(){
                 game.isTransitioning = true;
                 game.isGameStateChange = false;
                 game.nextStateMenu = GUIDE_SCREEN;
+
+                PauseMusicStream(mainMenuMusic);
                 
             }
+            ResumeMusicStream(mainMenuMusic);
+            UpdateMusicStream(mainMenuMusic);
+            
             return -1;
             break;
         case GUIDE_SCREEN:
+            ResumeMusicStream(mainMenuMusic);
+            UpdateMusicStream(mainMenuMusic);
 
             if(IsKeyPressed(KEY_TAB)){
                 game.isTransitioning = true;
                 game.isGameStateChange = false;
                 game.nextStateMenu = MAIN_MENU;
+
+                PauseMusicStream(mainMenuMusic);
             }
             return -1;
             break;
@@ -110,23 +126,41 @@ int updateMenu(){
             
 
             playerUpdate(&levelSelection);
+            UpdateMusicStream(levelSelectionMusic);
+
+            if(player.pos.y >= 800){
+                game.isTransitioning = true;
+                game.isGameStateChange = false;
+                game.nextStateMenu = MAIN_MENU;
+            }
             
             
             return levelSelectionUpdate();
             break;
 
         case START_PRESSED:
+            UpdateMusicStream(mainMenuMusic);
             if(playerAnimationRec.y > 500){
                 playerAnimationRec.y -= 2;
+                
             }
             else{
+                PauseMusicStream(mainMenuMusic);
+                PlayMusicStream(levelSelectionMusic);
+                SetMusicVolume(levelSelectionMusic, 0.6);
 
                 resetPlayer(&levelSelection);
                 game.isTransitioning = true;
                 game.isGameStateChange = false;
                 game.nextStateMenu = LEVEL_SELECTION;
-                playerAnimationRec = (Rectangle){467.5, 850, 75, 75};
+                camera1.target = player.pos;
+                if(!game.isTransitioning){
+                    playerAnimationRec = (Rectangle){467.5, 850, 75, 75};
+                }
+                
             }
+
+
 
             return -1;
             break;
@@ -150,7 +184,10 @@ void drawMenu(){
     switch(menuState){
         case MAIN_MENU:
             playAnimation(&mainMenuAnimation, (Rectangle){0,0,1000,1000}, 1, 0.1);
-            playAnimation(&player.sideAnim, playerAnimationRec, 1, 0.25);
+            if(playerAnimationRec.y == 850){
+                playAnimation(&player.sideAnim, playerAnimationRec, 1, 0.25);
+            }
+            
             break;
         case GUIDE_SCREEN:
             playAnimation(&howToPlayAnimation, (Rectangle){0,0, 1000, 1000}, 1, 0.25);

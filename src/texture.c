@@ -6,7 +6,7 @@ Texture2D levelTilesetTexture;
 
 Texture2D enemyTilesetTexture;
 
-Texture2D mainMenuTexture, howToPlayTexture;
+Texture2D mainMenuTexture, howToPlayTexture, levelUITexture;
 
 void loadTexture(){
     playerDownTexture = LoadTexture("../assets/playerDown.png");
@@ -19,6 +19,9 @@ void loadTexture(){
     enemyTilesetTexture = LoadTexture("../assets/enemyTilset.png");
     mainMenuTexture = LoadTexture("../assets/mainMenuSheet.png");
     howToPlayTexture = LoadTexture("../assets/howToPlay.png");
+    levelUITexture = LoadTexture("../assets/levelUI.png");
+
+    SetTextureFilter(levelTilesetTexture, TEXTURE_FILTER_POINT);
     
 }
 
@@ -33,4 +36,5 @@ void unloadTexture(){
     UnloadTexture(enemyTilesetTexture);
     UnloadTexture(mainMenuTexture);
     UnloadTexture(howToPlayTexture);
+    UnloadTexture(levelUITexture);
 }

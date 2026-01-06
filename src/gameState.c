@@ -1,5 +1,6 @@
 #include "gameState.h"
 #include "stdio.h"
+#include "math.h"
 
 Game game;
 
@@ -13,6 +14,9 @@ int deathFrameCount = 0;
 Rectangle transitionRec = {-1000, 0, 1000, 1000};
 
 saveData save;
+
+bool cameraReset = false;
+
 
 int loadSave(saveData *save)
 {
@@ -36,7 +40,7 @@ void saveGame(saveData *save)
 
 bool transitionIn(){
     if(transitionRec.x < 0){
-        transitionRec.x += 25;
+        transitionRec.x += 50;
         return false;
     }
     else{
@@ -47,7 +51,7 @@ bool transitionIn(){
 
 bool transitionOut(){
     if(transitionRec.x >= 0 && transitionRec.x < 1000){
-        transitionRec.x += 25;
+        transitionRec.x += 50;
         return false;
     }
     else{
@@ -65,7 +69,12 @@ void cameraUpdate(){
     //Update camera target with player position
     camera.target = (Vector2){player.rec.x + player.rec.width/2, player.rec.y + player.rec.height/2};
 
-   
+    float zoom = camera.zoom;
+
+    camera.target.x = roundf(camera.target.x * zoom) / zoom;
+    camera.target.y = roundf(camera.target.y * zoom) / zoom;
+
+
 
     if(!player.isMoving){
         if(camera.zoom <= 0.90f){
@@ -95,11 +104,13 @@ void gameInit(){
 
     loadTexture();
 
-    //Load menu
-    menuInit();
+
 
     //Load Sounds
     loadSound();
+
+    //Load menu
+    menuInit();
 
     //Loads level one
     levelInit(&levelOne, 1);
@@ -114,6 +125,8 @@ void gameInit(){
     game.currentState = MENU;
     game.currentLevel = &levelOne;
     game.isTransitioning = false;
+    game.transIn = false;
+    game.transOut = false;
 
     playerInit(game.currentLevel->startPos); 
 
@@ -133,17 +146,23 @@ void gameUpdate(){
                     break;
                 case 1: // Level One
 
-                    loadLevelEnemies(&levelOne);
+                    
                     game.currentLevel = &levelOne;
+                    loadLevelEnemies(&levelOne);
+                    camera.zoom = 0.75;
 
                     game.isTransitioning = true;
                     game.isGameStateChange = true;
                     game.nextStateGame = RESPAWN;
                     break;
                 case 2:  // level Two
-                    loadLevelEnemies(&levelTwo);
                     game.currentLevel = &levelTwo;
-                    game.currentState = RESPAWN;
+                    loadLevelEnemies(&levelTwo);
+                    camera.zoom = 0.75;
+
+                    game.isTransitioning = true;
+                    game.isGameStateChange = true;
+                    game.nextStateGame = RESPAWN;
                     break;
                 case 3:
                     break;
@@ -151,6 +170,11 @@ void gameUpdate(){
             break;
             
         case PLAYING:
+
+            if(!cameraReset){
+                camera.zoom = 0.75;
+                cameraReset = true;
+            }
             
             cameraUpdate();
             updateEnemy(game.currentLevel);
@@ -160,8 +184,10 @@ void gameUpdate(){
             game.currentLevel->time += GetFrameTime();
 
             if(IsKeyPressed(KEY_TAB)){
-                game.currentState = MENU;
-                menuState = MENU;
+                game.isTransitioning = true;
+                game.isGameStateChange = true;
+                game.nextStateGame = MENU;
+                menuState = MAIN_MENU;
             }
             break;
         case DEAD:
@@ -170,24 +196,37 @@ void gameUpdate(){
                 camera.zoom += 0.05;
             }
             if (deathFrameCount >= 210){
-                game.currentState = RESPAWN;
                 deathFrameCount = 0;
-                camera.zoom = 0.75;
+                
+                game.isTransitioning = true;
+                game.isGameStateChange = true;
+                game.nextStateGame = RESPAWN;
+                cameraReset = false;
+                
             }
             game.currentLevel->time = 0.0f;
             break;
         case RESPAWN:
-                game.currentState = PLAYING;
+                
                 resetPlayer(game.currentLevel);
                 resetEnemies();
                 loadLevelEnemies(game.currentLevel);
+                game.currentState = PLAYING;
+                
                 game.currentLevel->time = 0.0f;
 
             break;
         case LEVEL_COMPLETE:
             save.bestTimes[game.currentLevel->num-1] = game.currentLevel->time;
-            if(game.currentLevel->num != 3){
-                save.hightestLevel++;
+            switch(game.currentLevel->num){
+                case 1:
+                    save.hightestLevel = 2;
+                    break;
+                case 2:
+                    save.hightestLevel = 3;
+                    break;
+                case 3:
+                    break;
             }
             game.currentState = MENU;
             menuState = MENU;
@@ -205,15 +244,14 @@ void gameDraw(){
         case PLAYING:
             BeginMode2D(camera);
 
-                
- 
                 drawLevel(game.currentLevel);
                 drawPlayer();
                 drawEnemy();
                 
             EndMode2D();
-            DrawText(TextFormat("%d", save.deaths[game.currentLevel->num-1]), 0, 0, 50, WHITE);
-            DrawText(TextFormat("%.0f", game.currentLevel->time),0, 75, 50, WHITE);
+            DrawTexturePro(levelUITexture, (Rectangle){0,0, 48, 32}, (Rectangle){10,10, 144, 96}, (Vector2){0,0}, 0.0, WHITE);
+            DrawText(TextFormat("%d", save.deaths[game.currentLevel->num-1]), 95, 17.5, 40, WHITE);
+            DrawText(TextFormat("%.0f", game.currentLevel->time),100, 65, 40, WHITE);
             break;
 
         case DEAD:
@@ -222,10 +260,23 @@ void gameDraw(){
                 drawLevel(game.currentLevel);
                 drawEnemy();
                 drawPlayerDeath();
+                
         
             EndMode2D();
             break;
         case LEVEL_COMPLETE:
+            break;
+        
+        case RESPAWN:
+            // BeginMode2D(camera);
+
+                
+ 
+            //     drawLevel(game.currentLevel);
+            //     drawPlayer();
+            //     drawEnemy();
+                
+            // EndMode2D();
             break;
 
     }

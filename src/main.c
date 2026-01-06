@@ -50,8 +50,11 @@ int main(void){
         else{
             switch (transitionState){
                 case 0:
+                    game.transIn = true;
                     if(transitionIn()){
                         transitionState = 1;
+                        game.transIn = false;
+                        game.transOut = true;
                         if(game.isGameStateChange){
                             game.currentState = game.nextStateGame;
                         }
@@ -59,11 +62,15 @@ int main(void){
                             menuState = game.nextStateMenu;
                         }
                         game.isGameStateChange = NULL;
+                        PlaySound(transitionSwipe);
                     }
                     break;
                 
                 case 1:
+                    game.transOut = true;
                     if(transitionOut()){
+                        game.transOut = false;
+                        game.transIn = false;
                         transitionState = 0;
                         game.isTransitioning = false;
                     }

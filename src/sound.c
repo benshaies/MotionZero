@@ -1,7 +1,7 @@
 #include "sound.h"
 
-Sound walking, mediumShoot, sniperShoot, slowShoot, death;
-Music levelOneMusic, levelTwoMusic;
+Sound walking, mediumShoot, sniperShoot, slowShoot, death, transitionSwipe;
+Music levelOneMusic, levelTwoMusic, mainMenuMusic, levelSelectionMusic;
 
 
 
@@ -13,10 +13,13 @@ void loadSound(){
     slowShoot = LoadSound("../sound/slowShoot.wav");
     sniperShoot = LoadSound("../sound/snipperShoot.wav");
     death = LoadSound("../sound/dead.wav");
+    transitionSwipe = LoadSound("../sound/transitionSwipe.mp3");
 
 
     levelOneMusic = LoadMusicStream("../sound/level1.wav");
     levelTwoMusic = LoadMusicStream("../sound/level2.wav");
+    mainMenuMusic = LoadMusicStream("../sound/mainMenu.mp3");
+    levelSelectionMusic = LoadMusicStream("../sound/levelSelection.ogg");
 }
 
     
@@ -27,9 +30,12 @@ void unloadSound(){
     UnloadSound(slowShoot);
     UnloadSound(sniperShoot);
     UnloadSound(death);
+    UnloadSound(transitionSwipe);
 
 
     UnloadMusicStream(levelOneMusic);
     UnloadMusicStream(levelTwoMusic);
+    UnloadMusicStream(mainMenuMusic);
+    UnloadMusicStream(levelSelectionMusic);
     CloseAudioDevice();
 }

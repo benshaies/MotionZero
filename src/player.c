@@ -35,7 +35,7 @@ void playerInit(Vector2 startPos)
     player.animState = PLAYER_DEATHANIM;
 
     player.deathSound = death;
-    SetSoundVolume(player.deathSound, 0.25);
+    SetSoundVolume(player.deathSound, 0.5);
 
     player.levelComplete = false;
 }
@@ -186,10 +186,11 @@ void playerCollisions(Level *level)
                     {
                         deleteBullet(enemy[i].bullets, j);
                         if(!enemy[i].bullets[j].active){
-                            PlaySound(player.deathSound);
+                            
 
                             save.deaths[level->num-1]++;
                             game.currentState = DEAD;
+                            PlaySound(player.deathSound);
                             return;
                             break;
                         }
@@ -218,8 +219,11 @@ void drawPlayer()
     else if(player.playDownAnim){
         playAnimation(&player.downAnim, player.rec, isMovingRight ? 1 : -1, 0.15f);
     }
-    else if(!player.isMoving){
+    else if(!player.isMoving && game.currentState != MENU){
         playAnimation(&player.notMovingAnim, player.rec, 1, 0.15f);
+    }
+    else if(!player.isMoving && game.currentState == MENU){
+        drawAnimationFrame(&player.downAnim, player.rec, isMovingRight ? 1 : -1, 4);
     }
 
 

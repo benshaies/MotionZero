@@ -14,6 +14,7 @@
 
     extern Texture2D mainMenuTexture;
     extern Texture2D howToPlayTexture;
+    extern Texture2D levelUITexture;
 
     void loadTexture();
 

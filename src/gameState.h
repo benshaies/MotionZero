@@ -34,6 +34,8 @@
         Level *currentLevel;
 
         bool isTransitioning;
+        bool transOut;
+        bool transIn;
         bool isGameStateChange;
         GameState nextStateGame;
         Menu nextStateMenu;
