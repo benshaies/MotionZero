@@ -17,6 +17,12 @@ saveData save;
 
 bool cameraReset = false;
 
+Rectangle playerLevelCompleteRec = {-100, 900, 100, 100};
+
+int walkingSoundFrames2 = 0;
+bool walkingRight = false;
+bool saveUpdated = false;
+
 
 int loadSave(saveData *save)
 {
@@ -70,7 +76,7 @@ void cameraUpdate(){
     camera.target = (Vector2){player.rec.x + player.rec.width/2, player.rec.y + player.rec.height/2};
 
     float zoom = camera.zoom;
-
+    
     camera.target.x = roundf(camera.target.x * zoom) / zoom;
     camera.target.y = roundf(camera.target.y * zoom) / zoom;
 
@@ -92,9 +98,14 @@ void gameInit(){
 
     if(!loadSave(&save)){
         save.hightestLevel = 1;
-        save.deaths[0] = 0;
-        save.deaths[1] = 0;
-        save.deaths[2] = 0;
+
+        save.bestDeaths[0] = -1;
+        save.bestDeaths[1] = -1;
+        save.bestDeaths[2] = -1;
+
+        save.levelDeaths[0] = 0;
+        save.levelDeaths[1] = 0;
+        save.levelDeaths[2] = 0;
 
         save.bestTimes[0] = 0;
         save.bestTimes[1] = 0;
@@ -122,7 +133,7 @@ void gameInit(){
     loadLevel(&levelTwo);
 
 
-    game.currentState = MENU;
+    game.currentState = MAIN_MENU;
     game.currentLevel = &levelOne;
     game.isTransitioning = false;
     game.transIn = false;
@@ -217,19 +228,89 @@ void gameUpdate(){
 
             break;
         case LEVEL_COMPLETE:
-            save.bestTimes[game.currentLevel->num-1] = game.currentLevel->time;
-            switch(game.currentLevel->num){
-                case 1:
-                    save.hightestLevel = 2;
-                    break;
-                case 2:
-                    save.hightestLevel = 3;
-                    break;
-                case 3:
-                    break;
+            
+            if(!saveUpdated){
+                    //Saving best time
+                if(save.bestTimes[game.currentLevel->num-1] != 0 ){
+                    if(game.currentLevel->time < save.bestTimes[game.currentLevel->num-1]){
+                        save.bestTimes[game.currentLevel->num-1] = game.currentLevel->time;
+                    }
+                }
+                else{
+                    save.bestTimes[game.currentLevel->num-1] = game.currentLevel->time;
+                }
+
+
+                //Updating highest level
+                switch(game.currentLevel->num){
+                    case 1:
+                        save.hightestLevel = 2;
+                        break;
+                    case 2:
+                        save.hightestLevel = 3;
+                        break;
+                    case 3:
+                        break;
+                }
+
+                //Saving level deaths
+                if(save.bestDeaths[game.currentLevel->num-1] == -1){
+                    save.bestDeaths[game.currentLevel->num-1] = save.levelDeaths[game.currentLevel->num-1];
+                }
+                else{
+                    if(save.levelDeaths[game.currentLevel->num-1] < save.bestDeaths[game.currentLevel->num-1]){
+                        save.bestDeaths[game.currentLevel->num-1] = save.levelDeaths[game.currentLevel->num-1];
+                        
+                    }
+                }
+                saveUpdated = true;
             }
-            game.currentState = MENU;
-            menuState = MENU;
+            
+
+            if(playerLevelCompleteRec.x < 450){
+                playerLevelCompleteRec.x += 5;
+                PlaySound(victorySound);
+
+                walkingSoundFrames2++;
+                if(walkingSoundFrames2 >= 15){
+                    SetSoundVolume(walking, 0.12);
+                    PlaySound(walking);
+                    walkingSoundFrames2 = 0;
+                }
+
+            }
+            else{
+                if(IsKeyPressed(KEY_ENTER)){
+                    PlaySound(clickSound);
+                    walkingRight = true;
+                }
+
+                if(walkingRight){
+                    playerLevelCompleteRec.x += 5;
+
+                    walkingSoundFrames2++;
+                    if(walkingSoundFrames2 >= 15){
+                        SetSoundVolume(walking, 0.12);
+                        PlaySound(walking);
+                        walkingSoundFrames2 = 0;
+                    }
+
+                    if(playerLevelCompleteRec.x > 1000){
+                        game.isTransitioning = true;
+                        game.isGameStateChange = true;
+                        game.nextStateGame = MENU;
+                        menuState = MAIN_MENU;
+                        walkingRight = false;
+                        playerLevelCompleteRec = (Rectangle){-100, 900, 100, 100};
+                        saveUpdated = false;
+                        save.levelDeaths[game.currentLevel->num-1] = 0;
+                    }
+                }
+            }
+
+
+            // game.currentState = MENU;
+            // menuState = MENU;
             break;
     }
 }
@@ -250,7 +331,7 @@ void gameDraw(){
                 
             EndMode2D();
             DrawTexturePro(levelUITexture, (Rectangle){0,0, 48, 32}, (Rectangle){10,10, 144, 96}, (Vector2){0,0}, 0.0, WHITE);
-            DrawText(TextFormat("%d", save.deaths[game.currentLevel->num-1]), 95, 17.5, 40, WHITE);
+            DrawText(TextFormat("%d", save.levelDeaths[game.currentLevel->num-1]), 95, 17.5, 40, WHITE);
             DrawText(TextFormat("%.0f", game.currentLevel->time),100, 65, 40, WHITE);
             break;
 
@@ -265,6 +346,16 @@ void gameDraw(){
             EndMode2D();
             break;
         case LEVEL_COMPLETE:
+            ClearBackground(BLACK);
+
+            if(playerLevelCompleteRec.x >= 450){
+                DrawTexturePro(levelCompleteTexture, (Rectangle){0,0, 1000, 1000}, (Rectangle){0,0,1000,1000}, (Vector2){0,0}, 0.0, WHITE);
+                DrawText(TextFormat("%.0f", game.currentLevel->time), 550, 440, 60, RED); 
+                DrawText(TextFormat("%d", save.levelDeaths[game.currentLevel->num-1]), 625, 600, 60, RED);
+            }
+
+            playAnimation(&player.sideAnim, playerLevelCompleteRec, 1, 0.15);
+
             break;
         
         case RESPAWN:

@@ -11,8 +11,9 @@
 
     typedef struct{
         int hightestLevel;
-        int deaths[3];
+        int bestDeaths[3];
         float bestTimes[3];
+        int levelDeaths[3];
     }saveData;
 
     extern saveData save;

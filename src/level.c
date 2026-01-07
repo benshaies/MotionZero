@@ -50,7 +50,7 @@ void levelInit(Level *level, int levelNum){
             level->num = levelNum;
             level->width = 73;
             level->height = 40;
-            level->startPos = (Vector2){3 * TILE_SIZE, 3 * TILE_SIZE};
+            level->startPos = (Vector2){3 * TILE_SIZE, 3 * TILE_SIZE}; // 3 and 3
 
             level->filename = "../levels/level2.csv";
 
@@ -69,6 +69,16 @@ void levelInit(Level *level, int levelNum){
             level->time = 0.0f;
 
             break;
+
+        case 3:
+            level->num = levelNum;
+            level->width = 42;
+            level->height = 69;
+            level->startPos = (Vector2){36 * TILE_SIZE, 67 * TILE_SIZE};
+
+            level->filename = "../levels/level3.csv";
+
+
     }
 
     level->array = malloc(level->height * sizeof(int*));

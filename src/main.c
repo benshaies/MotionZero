@@ -18,6 +18,8 @@ typedef enum{
 
 transState transitionState = 0;
 
+bool exitGame = false;
+
 void draw(){
     BeginDrawing();
 
@@ -39,9 +41,15 @@ int main(void){
     SetTargetFPS(60);
 
     gameInit();
-    while (!WindowShouldClose()){
-
     
+    SetExitKey(KEY_NULL);
+
+    while (!WindowShouldClose() && !exitGame){
+
+        if(IsKeyPressed(KEY_ESCAPE)){
+            exitGame = true;
+        }
+        
         draw(); 
             
         if(!game.isTransitioning){

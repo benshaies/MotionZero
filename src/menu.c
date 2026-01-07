@@ -19,11 +19,17 @@ Camera2D camera1;
 
 int levelSelectionGates[3];
 
+bool bestRunsScreen = false;
+
 
 
 
 
 int levelSelectionUpdate(){
+    if(IsKeyPressed(KEY_I)){
+        bestRunsScreen = !bestRunsScreen;
+        PlaySound(clickSound);
+    }
 
     if(save.hightestLevel == 1){
         
@@ -46,8 +52,7 @@ int levelSelectionUpdate(){
             return 3;
     }
 
-
-
+    
 
     
 }
@@ -91,13 +96,15 @@ int updateMenu(){
             playerAnimationRec.y = 850;
             if(IsKeyPressed(KEY_ENTER)){
                 menuState = START_PRESSED;
+                PlaySound(clickSound);
                 
             }
             else if(IsKeyPressed(KEY_TAB)){
-                
+                PlaySound(clickSound);
                 game.isTransitioning = true;
                 game.isGameStateChange = false;
                 game.nextStateMenu = GUIDE_SCREEN;
+                
 
                 PauseMusicStream(mainMenuMusic);
                 
@@ -112,6 +119,7 @@ int updateMenu(){
             UpdateMusicStream(mainMenuMusic);
 
             if(IsKeyPressed(KEY_TAB)){
+                PlaySound(clickSound);
                 game.isTransitioning = true;
                 game.isGameStateChange = false;
                 game.nextStateMenu = MAIN_MENU;
@@ -124,8 +132,10 @@ int updateMenu(){
         case LEVEL_SELECTION:
             camera1.target = player.pos;
             
-
-            playerUpdate(&levelSelection);
+            if(!bestRunsScreen){
+                playerUpdate(&levelSelection);
+            }
+            
             UpdateMusicStream(levelSelectionMusic);
 
             if(player.pos.y >= 800){
@@ -133,6 +143,7 @@ int updateMenu(){
                 game.isGameStateChange = false;
                 game.nextStateMenu = MAIN_MENU;
             }
+
             
             
             return levelSelectionUpdate();
@@ -159,9 +170,6 @@ int updateMenu(){
                 }
                 
             }
-
-
-
             return -1;
             break;
 
@@ -171,10 +179,6 @@ int updateMenu(){
 
             return -1;
             break;
-
-       
-        
-        
         
     }
 }
@@ -198,7 +202,37 @@ void drawMenu(){
                 ClearBackground(BLACK);
                 drawLevel(&levelSelection);
                 drawPlayer();
+
+                
             EndMode2D();
+
+            DrawText("I - Best Runs", 800, 900, 25, WHITE);
+
+            if(bestRunsScreen){
+                    DrawRectangle(0, 0, 2000, 2000, Fade(BLACK, 0.9));
+                    DrawTexturePro(bestRunsTexture, (Rectangle){0,0,1000,1000}, (Rectangle){0, -50, 1000, 1000}, (Vector2){0,0}, 0.0f, WHITE);
+
+                    //Level One
+                    if(save.bestDeaths[0] != -1 && save.bestTimes[0] != 0){
+                        DrawText(TextFormat("%d", save.bestDeaths[0]), 725, 350, 50, WHITE);
+                        DrawText(TextFormat("%.0f", save.bestTimes[0]), 475, 350, 50, WHITE);
+                    }
+
+                    //Level two
+                    if(save.bestDeaths[1] != -1 && save.bestTimes[1] != 0){
+                        DrawText(TextFormat("%d", save.bestDeaths[1]), 725, 600, 50, WHITE);
+                        DrawText(TextFormat("%.0f", save.bestTimes[1]), 475, 600, 50, WHITE);
+                    }
+
+                    //Level 3
+                    if(save.bestDeaths[2] != -1 && save.bestTimes[2] != 0){
+                        DrawText(TextFormat("%d", save.bestDeaths[2]), 725, 850, 50, WHITE);
+                        DrawText(TextFormat("%.0f", save.bestTimes[2]), 475, 850, 50, WHITE);
+                    }
+                    
+            }
+
+        
             break;
 
         case START_PRESSED:

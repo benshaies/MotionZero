@@ -15,6 +15,8 @@
     extern Texture2D mainMenuTexture;
     extern Texture2D howToPlayTexture;
     extern Texture2D levelUITexture;
+    extern Texture2D levelCompleteTexture;
+    extern Texture2D bestRunsTexture;
 
     void loadTexture();
 

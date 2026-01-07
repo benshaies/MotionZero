@@ -44,7 +44,9 @@ void playerUpdate(Level *level)
 {
 
     if(player.levelComplete){
-        game.currentState = LEVEL_COMPLETE;
+        game.isTransitioning = true;
+        game.isGameStateChange = true;
+        game.nextStateGame = LEVEL_COMPLETE;
         player.levelComplete = false;
         return;
     }
@@ -188,7 +190,7 @@ void playerCollisions(Level *level)
                         if(!enemy[i].bullets[j].active){
                             
 
-                            save.deaths[level->num-1]++;
+                            save.levelDeaths[level->num-1]++;
                             game.currentState = DEAD;
                             PlaySound(player.deathSound);
                             return;
