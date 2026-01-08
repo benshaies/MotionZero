@@ -43,7 +43,7 @@ void enemyInit(Vector2 pos, int type){
                     animationInit(&enemy[i].anim, 0, enemyTilesetTexture, 16, 4, 0, 16);
 
                     enemy[i].fireSound = sniperShoot;
-                    SetSoundVolume(enemy[i].fireSound, 0.25);
+                    SetSoundVolume(enemy[i].fireSound, 0.35);
                     break;
                 case 58: //Slow but a lot
                     enemy[i].enemyColor = PURPLE;

@@ -1,7 +1,7 @@
 #include "sound.h"
 
 Sound walking, mediumShoot, sniperShoot, slowShoot, death, transitionSwipe, victorySound, clickSound;
-Music levelOneMusic, levelTwoMusic, mainMenuMusic, levelSelectionMusic;
+Music levelOneMusic, levelTwoMusic, mainMenuMusic, levelSelectionMusic, levelThreeMusic;
 
 
 
@@ -18,10 +18,11 @@ void loadSound(){
     clickSound = LoadSound("../sound/click.wav");
 
 
-    levelOneMusic = LoadMusicStream("../sound/level1.wav");
-    levelTwoMusic = LoadMusicStream("../sound/level2.wav");
+    levelOneMusic = LoadMusicStream("../sound/level1.ogg");
+    levelTwoMusic = LoadMusicStream("../sound/level2.ogg");
     mainMenuMusic = LoadMusicStream("../sound/mainMenu.mp3");
     levelSelectionMusic = LoadMusicStream("../sound/levelSelection.ogg");
+    levelThreeMusic = LoadMusicStream("../sound/level3Music.ogg");
 }
 
     
@@ -41,5 +42,6 @@ void unloadSound(){
     UnloadMusicStream(levelTwoMusic);
     UnloadMusicStream(mainMenuMusic);
     UnloadMusicStream(levelSelectionMusic);
+    UnloadMusicStream(levelThreeMusic);
     CloseAudioDevice();
 }

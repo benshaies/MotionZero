@@ -40,7 +40,7 @@ void levelInit(Level *level, int levelNum){
             level->rec[2] = (Rectangle){2300, 100, 800, 2200};
 
             level->music = levelOneMusic;
-            level->musicVolume = 0.2;
+            level->musicVolume = 0.15;
 
             level->time = 0.0f;
 
@@ -50,7 +50,7 @@ void levelInit(Level *level, int levelNum){
             level->num = levelNum;
             level->width = 73;
             level->height = 40;
-            level->startPos = (Vector2){3 * TILE_SIZE, 3 * TILE_SIZE}; // 3 and 3
+            level->startPos = (Vector2){73 * TILE_SIZE, -1 * TILE_SIZE}; // 3 and 3
 
             level->filename = "../levels/level2.csv";
 
@@ -64,7 +64,7 @@ void levelInit(Level *level, int levelNum){
             level->rec[4] = (Rectangle){6209, 92, 1016, 921};
 
             level->music = levelTwoMusic;
-            level->musicVolume = 0.2;
+            level->musicVolume = 0.15;
 
             level->time = 0.0f;
 
@@ -78,6 +78,19 @@ void levelInit(Level *level, int levelNum){
 
             level->filename = "../levels/level3.csv";
 
+            level->RecNum = 5;
+            level->rec = malloc(sizeof(Rectangle) * level->RecNum);
+
+            level->rec[0] = (Rectangle){1100, 100, 2500, 1200};
+            level->rec[1] = (Rectangle){1100, 1300, 1200, 1600};
+            level->rec[2] = (Rectangle){100, 1900, 1100, 2900};
+            level->rec[3] = (Rectangle){100, 4800, 4000, 1000};
+            level->rec[4] = (Rectangle){3100, 5800, 1000, 1000};
+
+            level->music = levelThreeMusic;
+            level->musicVolume = 0.20;
+
+            level->time = 0.0f;
 
     }
 

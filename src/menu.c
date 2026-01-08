@@ -21,6 +21,8 @@ int levelSelectionGates[3];
 
 bool bestRunsScreen = false;
 
+bool playerLevelSelectionReset = false;
+
 
 
 
@@ -43,12 +45,15 @@ int levelSelectionUpdate(){
     }
 
     if(CheckCollisionRecs(player.rec, (Rectangle){levelSelectionGates[0] * TILE_SIZE, -100, TILE_SIZE, TILE_SIZE})){
+            playerLevelSelectionReset = false;
             return 1;
     }
-    else if(CheckCollisionRecs(player.rec, (Rectangle){levelSelectionGates[1] * TILE_SIZE, -100, TILE_SIZE, TILE_SIZE}) && (save.hightestLevel == 2 || save.hightestLevel == 3) ){
+    else if(CheckCollisionRecs(player.rec, (Rectangle){levelSelectionGates[1] * TILE_SIZE, -100, TILE_SIZE, TILE_SIZE}) && (save.hightestLevel == 2 || save.hightestLevel == 3)){
+            playerLevelSelectionReset = false;
             return 2;
     }
     else if(CheckCollisionRecs(player.rec, (Rectangle){levelSelectionGates[2] * TILE_SIZE, -100, TILE_SIZE, TILE_SIZE}) && save.hightestLevel == 3){
+            playerLevelSelectionReset = false;
             return 3;
     }
 
@@ -109,6 +114,7 @@ int updateMenu(){
                 PauseMusicStream(mainMenuMusic);
                 
             }
+            playerLevelSelectionReset = true;
             ResumeMusicStream(mainMenuMusic);
             UpdateMusicStream(mainMenuMusic);
             
@@ -130,6 +136,12 @@ int updateMenu(){
             break;
 
         case LEVEL_SELECTION:
+            if(!playerLevelSelectionReset){
+                resetPlayer(&levelSelection);
+                playerLevelSelectionReset = true;
+            }
+
+            
             camera1.target = player.pos;
             
             if(!bestRunsScreen){

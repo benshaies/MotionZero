@@ -8,6 +8,7 @@ Camera2D camera;
 
 Level levelOne;
 Level levelTwo;
+Level levelThree;
 
 int deathFrameCount = 0;
 
@@ -132,6 +133,9 @@ void gameInit(){
     levelInit(&levelTwo, 2);
     loadLevel(&levelTwo);
 
+    levelInit(&levelThree, 3);
+    loadLevel(&levelThree);
+
 
     game.currentState = MAIN_MENU;
     game.currentLevel = &levelOne;
@@ -156,11 +160,11 @@ void gameUpdate(){
                 case -1: // Still in menu stuff
                     break;
                 case 1: // Level One
-
                     
                     game.currentLevel = &levelOne;
                     loadLevelEnemies(&levelOne);
                     camera.zoom = 0.75;
+                    StopMusicStream(game.currentLevel->music);
 
                     game.isTransitioning = true;
                     game.isGameStateChange = true;
@@ -170,12 +174,21 @@ void gameUpdate(){
                     game.currentLevel = &levelTwo;
                     loadLevelEnemies(&levelTwo);
                     camera.zoom = 0.75;
-
+                    StopMusicStream(game.currentLevel->music);
+                
                     game.isTransitioning = true;
                     game.isGameStateChange = true;
                     game.nextStateGame = RESPAWN;
                     break;
                 case 3:
+                    game.currentLevel = &levelThree;
+                    loadLevelEnemies(&levelThree);
+                    camera.zoom = 0.75;
+                    StopMusicStream(game.currentLevel->music);
+
+                    game.isTransitioning = true;
+                    game.isGameStateChange = true;
+                    game.nextStateGame = RESPAWN;
                     break;
             }
             break;
@@ -299,7 +312,7 @@ void gameUpdate(){
                         game.isTransitioning = true;
                         game.isGameStateChange = true;
                         game.nextStateGame = MENU;
-                        menuState = MAIN_MENU;
+                        menuState = LEVEL_SELECTION;
                         walkingRight = false;
                         playerLevelCompleteRec = (Rectangle){-100, 900, 100, 100};
                         saveUpdated = false;

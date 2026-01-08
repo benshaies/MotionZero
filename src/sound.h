@@ -3,7 +3,7 @@
 #include "raylib.h"
 
     extern Sound walking, mediumShoot, sniperShoot, slowShoot, death, transitionSwipe, victorySound, clickSound;
-    extern Music levelOneMusic, levelTwoMusic, mainMenuMusic, levelSelectionMusic;
+    extern Music levelOneMusic, levelTwoMusic, mainMenuMusic, levelSelectionMusic, levelThreeMusic;
 
     void loadSound();
 
