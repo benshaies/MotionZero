@@ -1,64 +1,56 @@
-Motion Zero
+# Motion Zero
 
-Motion Zero is a fast-paced top-down arena shooter built in C using Raylib, focused on precision movement and a time-slow mechanic to outplay enemies.
 
-The game features a complete gameplay loop with menus, progression, and multiple handcrafted levels.
-Status: Finished — v1.0
+**Motion Zero** is a fast-paced top-down arena shooter built in **C using Raylib**, focused on precision movement and a time-slow mechanic.
 
-Features
+**Time slows down when you do not move**
 
-Bullet-time / slow-motion combat
+**Status:** Finished — v1.0
 
-Main menu and guide screen
+---
+<img width="1000" height="1000" alt="screenshot000" src="https://github.com/user-attachments/assets/ff7c6dd9-5f34-49f2-8f62-b7223224ecc2" />
+---
 
-Level selection hub
+## Features
+- Bullet-time / slow-motion combat
+- Main menu and guide screen
+- Level selection hub
+- 3 playable levels with increasing difficulty
+- Progress tracking using save file
+- Built in level timer and death counter
+- Best runs screen
+- Keyboard - WASD
+- Built entirely in C using Raylib
 
-3 playable levels with increasing difficulty
+---
+<img width="1000" height="1000" alt="screenshot001" src="https://github.com/user-attachments/assets/808ed137-dcd1-4fd6-a1b2-c197232728fc" />
+---
 
-Keyboard + mouse controls
+## Game Flow
+1. Main Menu
+2. Guide Screen
+3. Level Selection Room
+4. Levels (3)
 
-Original gameplay logic built from scratch in C
+---
+<img width="1000" height="1000" alt="screenshot002" src="https://github.com/user-attachments/assets/cc6c8aaa-9ecd-4efe-a9b7-7cf9957da9e2" />
+---
 
-Game Flow
+## Controls
+- **WASD** – Move  
+- **TAB** – Back / Exit  
 
-Main Menu – start the game or view the guide
+---
 
-Guide Screen – learn controls and mechanics
+## Build
+- **Language:** C  
+- **Framework:** Raylib  
+- **Tested on:** Windows / Linux  
 
-Level Selection Room – choose your level
+Compile and link against Raylib using your existing setup.
 
-Levels (3) – complete arenas using movement and slow-mo to survive
+---
 
-Controls
-
-WASD – Move
-
-Mouse – Aim / Shoot
-
-[Slow-mo key] – Slow time
-
-ESC – Pause / Back
-
-(Adjust keys to match your actual bindings.)
-
-Build Instructions
-
-Language: C
-
-Framework: Raylib
-
-Tested on: Windows / Linux
-
-To build, compile the source files and link against Raylib using your preferred compiler setup.
-
-(You can add a single example command later if you want, but it’s not required.)
-
-Versioning
-
-v1.0 – Full release
-
-Previous versions are available as playtest prereleases in the GitHub Releases section.
-
-Notes
-
-This project was built as a polished standalone game and learning experience, focusing on clean gameplay systems, iteration, and finishing a complete product.
+## Releases
+- **v1.0** – Full release  
+- Earlier versions are available as playtest prereleases.
