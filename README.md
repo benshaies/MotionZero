@@ -57,8 +57,6 @@ Compile and link against Raylib using your existing setup.
 
 ---
 
----
-
 ## Credits
 - **Music:** Level soundtracks - Centurion_of_war |  https://opengameart.org/users/centurionofwar
 - **Enemy sprites:** Free pixel art asset pack (artist unknown), recolored and modified.
