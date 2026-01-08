@@ -50,7 +50,7 @@ void levelInit(Level *level, int levelNum){
             level->num = levelNum;
             level->width = 73;
             level->height = 40;
-            level->startPos = (Vector2){73 * TILE_SIZE, -1 * TILE_SIZE}; // 3 and 3
+            level->startPos = (Vector2){3 * TILE_SIZE, 3 * TILE_SIZE}; // 3 and 3
 
             level->filename = "../levels/level2.csv";
 

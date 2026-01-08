@@ -170,7 +170,7 @@ int updateMenu(){
             else{
                 PauseMusicStream(mainMenuMusic);
                 PlayMusicStream(levelSelectionMusic);
-                SetMusicVolume(levelSelectionMusic, 0.6);
+                SetMusicVolume(levelSelectionMusic, 0.75);
 
                 resetPlayer(&levelSelection);
                 game.isTransitioning = true;
