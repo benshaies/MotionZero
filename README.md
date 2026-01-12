@@ -5,7 +5,7 @@
 
 **Time slows down when you do not move**
 
-**Status:** Finished — v1.0
+**Status:** Finished — v1.1
 
 ---
 <img width="1000" height="1000" alt="screenshot000" src="https://github.com/user-attachments/assets/ff7c6dd9-5f34-49f2-8f62-b7223224ecc2" />
