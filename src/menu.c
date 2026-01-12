@@ -203,6 +203,8 @@ void drawMenu(){
             if(playerAnimationRec.y == 850){
                 playAnimation(&player.sideAnim, playerAnimationRec, 1, 0.25);
             }
+
+            DrawText("Press Q to Quit", 800, 950, 25, WHITE);
             
             break;
         case GUIDE_SCREEN:

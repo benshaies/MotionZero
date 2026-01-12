@@ -46,7 +46,7 @@ int main(void){
 
     while (!WindowShouldClose() && !exitGame){
 
-        if(IsKeyPressed(KEY_ESCAPE)){
+        if(IsKeyPressed(KEY_Q) && game.currentState == MENU && menuState == MAIN_MENU){
             exitGame = true;
         }
         
